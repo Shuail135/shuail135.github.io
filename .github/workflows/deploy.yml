@@ -41,6 +41,10 @@ jobs:
         working-directory: music-production-for-dummies/quartz
         run: npm install
 
+      - name: Install Quartz plugins
+        working-directory: music-production-for-dummies/quartz
+        run: npx quartz plugin install
+
       - name: Build Quartz
         working-directory: music-production-for-dummies/quartz
         run: npx quartz build -d ../content -o ../../dist/music-production-for-dummies
