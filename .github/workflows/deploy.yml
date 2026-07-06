@@ -28,10 +28,14 @@ jobs:
           node-version: 22
 
       - name: Create output folder
-        run: mkdir -p dist
+        run: |
+          rm -rf dist
+          mkdir -p dist
 
       - name: Copy portfolio homepage
-        run: cp index.html dist/index.html
+        run: |
+          cp -r public/. dist/
+          touch dist/.nojekyll
 
       - name: Install Quartz dependencies
         working-directory: music-production-for-dummies/quartz
