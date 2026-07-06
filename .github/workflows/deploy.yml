@@ -1,4 +1,4 @@
-name: Deploy portfolio and Quartz to GitHub Pages
+name: Deploy portfolio and Quartz
 
 on:
   push:
@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout repo
         uses: actions/checkout@v4
 
       - name: Setup Node
@@ -27,20 +27,21 @@ jobs:
         with:
           node-version: 22
 
-      - name: Prepare output folder
-        run: |
-          mkdir -p dist
-          cp index.html dist/index.html
+      - name: Create output folder
+        run: mkdir -p dist
+
+      - name: Copy portfolio homepage
+        run: cp index.html dist/index.html
 
       - name: Install Quartz dependencies
         working-directory: music-production-for-dummies/quartz
-        run: npm ci
+        run: npm install
 
       - name: Build Quartz
         working-directory: music-production-for-dummies/quartz
         run: npx quartz build -d ../content -o ../../dist/music-production-for-dummies
 
-      - name: Upload GitHub Pages artifact
+      - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: dist
