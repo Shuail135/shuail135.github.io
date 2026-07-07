@@ -4,6 +4,7 @@ import {
     Linkedin,
     Mail,
     Download,
+    Folder,
     Menu,
     X,
     ExternalLink,
@@ -17,9 +18,13 @@ import idleDuck from "../../img/rubber_duck_idle.png";
 import clickedDuck1 from "../../img/rubber_duck_clicked1.png";
 import clickedDuck2 from "../../img/rubber_duck_clicked2.png";
 import submarineWindow from "../../img/submarine_window.png";
+import quackSfx from "../../sfx/quack.mp3";
+import resumePdf from "../../pdf/Résumé.pdf";
 
 // ── Types ──────────────────────────────────────────────────────────────────
 type Section = "home" | "about" | "skills" | "projects" | "music" | "contact";
+
+const WEB3FORMS_ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY as string | undefined;
 
 const NAV_ITEMS: { id: Section; label: string }[] = [
     {id: "home", label: "Home"},
@@ -42,7 +47,7 @@ function DuckAvatar({
 
     const [src, setSrc] = useState(idle);
     const animatingRef = useRef(false);
-    const queuedRef = useRef(false);
+    const quackRef = useRef<HTMLAudioElement | null>(null);
     const timeoutRefs = useRef<number[]>([]);
 
     useEffect(() => {
@@ -50,42 +55,42 @@ function DuckAvatar({
             const im = new Image();
             im.src = s;
         });
+        quackRef.current = new Audio(quackSfx);
+        quackRef.current.preload = "auto";
 
         return () => {
             timeoutRefs.current.forEach((timeout) => window.clearTimeout(timeout));
+            quackRef.current = null;
         };
     }, [idle, clicked1, clicked2]);
 
-    useEffect(() => {
-        const onKey = (e: KeyboardEvent) => {
-            if (e.defaultPrevented) return;
-            if (e.code === "Space" || e.key === "Enter") {
-                e.preventDefault();
-                trigger();
-            }
-        };
 
-        window.addEventListener("keydown", onKey);
-        return () => window.removeEventListener("keydown", onKey);
-    }, []);
+    function clearAnimationTimers() {
+        timeoutRefs.current.forEach((timeout) => window.clearTimeout(timeout));
+        timeoutRefs.current = [];
+    }
 
     function trigger() {
-        if (animatingRef.current) {
-            queuedRef.current = true;
-            return;
-        }
-        animatingRef.current = true;
+        clearAnimationTimers();
 
+        const quack = quackRef.current;
+        if (quack) {
+            try {
+                quack.currentTime = 0;
+                void quack.play().catch(() => {});
+            } catch {
+                // Ignore audio state errors; the visual animation should still run.
+            }
+        }
+
+        animatingRef.current = true;
         setSrc(clicked1);
+
         const firstTimeout = window.setTimeout(() => {
             setSrc(clicked2);
             const secondTimeout = window.setTimeout(() => {
                 setSrc(idle);
                 animatingRef.current = false;
-                if (queuedRef.current) {
-                    queuedRef.current = false;
-                    trigger();
-                }
             }, frameDuration);
             timeoutRefs.current.push(secondTimeout);
         }, frameDuration);
@@ -332,13 +337,6 @@ const SKILLS = [
         logo: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/abletonlive.svg",
         invertLogo: true
     },
-    {
-        name: "Canva",
-        category: "Game & Creative Tools",
-        color: "#00c4cc",
-        logo: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/canva.svg",
-        invertLogo: true
-    },
     {name: "GarageBand", category: "Game & Creative Tools", color: "#f97316"},
 
     {name: "MobileNetV4", category: "AI & ML", color: "#ff6f00"},
@@ -409,6 +407,8 @@ export default function App() {
         message: "",
     });
     const [formSent, setFormSent] = useState(false);
+    const [formSubmitting, setFormSubmitting] = useState(false);
+    const [formError, setFormError] = useState("");
     const duckTriggerRef = useRef<(() => void) | null>(null);
 
     const scrollTo = (id: Section) => {
@@ -444,10 +444,46 @@ export default function App() {
         return () => observers.forEach((obs) => obs.disconnect());
     }, []);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setFormSent(true);
-        setFormData({name: "", email: "", message: ""});
+        setFormError("");
+
+        if (!WEB3FORMS_ACCESS_KEY) {
+            setFormError("Contact form is missing its Web3Forms access key.");
+            return;
+        }
+
+        setFormSubmitting(true);
+
+        try {
+            const response = await fetch("https://api.web3forms.com/submit", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                },
+                body: JSON.stringify({
+                    access_key: WEB3FORMS_ACCESS_KEY,
+                    from_name: "Portfolio Contact Form",
+                    subject: `New portfolio message from ${formData.name}`,
+                    name: formData.name,
+                    email: formData.email,
+                    message: formData.message,
+                }),
+            });
+            const result = await response.json();
+
+            if (!response.ok || !result.success) {
+                throw new Error(result.message || "Message could not be sent.");
+            }
+
+            setFormSent(true);
+            setFormData({name: "", email: "", message: ""});
+        } catch (error) {
+            setFormError(error instanceof Error ? error.message : "Message could not be sent.");
+        } finally {
+            setFormSubmitting(false);
+        }
     };
 
     return (
@@ -458,11 +494,17 @@ export default function App() {
                 <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-16">
                     <button
                         onClick={() => scrollTo("home")}
-                        className="font-display font-bold text-lg tracking-tight text-foreground flex-shrink-0"
+                        className="font-display font-bold text-lg tracking-tight text-foreground flex flex-shrink-0 items-center gap-2"
                     >
-                        <span className="text-primary">{"<"}</span>
-                        Sum Yan Wan
-                        <span className="text-primary">{"/>"}</span>
+                        <img
+                            src={idleDuck}
+                            alt=""
+                            aria-hidden="true"
+                            draggable="false"
+                            className="h-8 w-8 object-contain"
+                            style={{imageRendering: "pixelated"}}
+                        />
+                        <span><span className="text-primary">{"<"}</span>Sum Yan Wan<span className="text-primary">{"/>"}</span></span>
                     </button>
 
                     {/* Desktop nav */}
@@ -576,11 +618,18 @@ export default function App() {
                                     <Linkedin size={15}/> LinkedIn
                                 </a>
                                 <a
-                                    href="#"
+                                    href={resumePdf}
+                                    download="Sum-Yan-Wan-Resume.pdf"
                                     className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-card border border-border text-foreground text-sm font-medium hover:border-primary/50 hover:bg-primary/10 transition-all duration-200"
                                 >
-                                    <Download size={15}/> Download CV
+                                    <Download size={15}/> Résumé
                                 </a>
+                                <button
+                                    onClick={() => scrollTo("projects")}
+                                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-card border border-border text-foreground text-sm font-medium hover:border-primary/50 hover:bg-primary/10 transition-all duration-200"
+                                >
+                                    <Folder size={15}/> Projects
+                                </button>
                                 <button
                                     onClick={() => scrollTo("contact")}
                                     className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition-all duration-200"
@@ -595,7 +644,7 @@ export default function App() {
                             <div className="relative isolate w-64 h-64 lg:w-[380px] lg:h-[380px]">
                                 {/* Slow orbit rings */}
                                 <div
-                                    className="pointer-events-none absolute inset-0 z-50 rounded-full border border-primary/20"
+                                    className="pointer-events-none absolute inset-0 z-30 rounded-full border border-primary/20"
                                     style={{
                                         animation: "spin 22s linear infinite",
                                     }}
@@ -663,17 +712,10 @@ export default function App() {
                                         <DuckAvatar triggerRef={duckTriggerRef}/>
                                     </div>
                                 </div>
-                                <button
-                                    type="button"
-                                    className="absolute inset-10 z-40 cursor-pointer overflow-visible focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+                                <div
+                                    className="absolute inset-10 z-40 cursor-pointer overflow-visible"
                                     onClick={() => duckTriggerRef.current?.()}
-                                    onKeyDown={(e) => {
-                                        if (e.key === "Enter" || e.code === "Space") {
-                                            e.preventDefault();
-                                            duckTriggerRef.current?.();
-                                        }
-                                    }}
-                                    aria-label="Play rubber duck animation"
+                                    aria-hidden="true"
                                 >
                                     <img
                                         src={submarineWindow}
@@ -683,7 +725,7 @@ export default function App() {
                                         className="pointer-events-none absolute left-1/2 top-1/2 h-[130%] w-[130%] max-w-none -translate-x-1/2 -translate-y-1/2 select-none object-contain"
                                         style={{imageRendering: "pixelated", maxWidth: "none"}}
                                     />
-                                </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -793,10 +835,11 @@ export default function App() {
             }
 
             .pixel-jellyfish {
-              width: 24px;
-              height: 24px;
+              --jelly-pixel: clamp(5px, 1.5vw, 8px);
+              width: calc(var(--jelly-pixel) * 6);
+              height: calc(var(--jelly-pixel) * 6);
               image-rendering: pixelated;
-              filter: drop-shadow(0 0 8px currentColor);
+              filter: drop-shadow(0 0 0.33em currentColor);
               color: #67e8f9;
             }
 
@@ -806,47 +849,48 @@ export default function App() {
               position: absolute;
               left: 0;
               top: 0;
-              width: 4px;
-              height: 4px;
+              width: var(--jelly-pixel);
+              height: var(--jelly-pixel);
               background: currentColor;
             }
 
             .pixel-jellyfish::before {
               box-shadow:
-                8px 0 currentColor,
-                12px 0 currentColor,
-                4px 4px currentColor,
-                8px 4px currentColor,
-                12px 4px currentColor,
-                16px 4px currentColor,
-                4px 8px currentColor,
-                8px 8px currentColor,
-                12px 8px currentColor,
-                16px 8px currentColor,
-                0 12px currentColor,
-                8px 12px currentColor,
-                16px 12px currentColor,
-                20px 12px currentColor;
+                calc(var(--jelly-pixel) * 2) 0 currentColor,
+                calc(var(--jelly-pixel) * 3) 0 currentColor,
+                var(--jelly-pixel) var(--jelly-pixel) currentColor,
+                calc(var(--jelly-pixel) * 2) var(--jelly-pixel) currentColor,
+                calc(var(--jelly-pixel) * 3) var(--jelly-pixel) currentColor,
+                calc(var(--jelly-pixel) * 4) var(--jelly-pixel) currentColor,
+                var(--jelly-pixel) calc(var(--jelly-pixel) * 2) currentColor,
+                calc(var(--jelly-pixel) * 2) calc(var(--jelly-pixel) * 2) currentColor,
+                calc(var(--jelly-pixel) * 3) calc(var(--jelly-pixel) * 2) currentColor,
+                calc(var(--jelly-pixel) * 4) calc(var(--jelly-pixel) * 2) currentColor,
+                0 calc(var(--jelly-pixel) * 3) currentColor,
+                calc(var(--jelly-pixel) * 2) calc(var(--jelly-pixel) * 3) currentColor,
+                calc(var(--jelly-pixel) * 4) calc(var(--jelly-pixel) * 3) currentColor,
+                calc(var(--jelly-pixel) * 5) calc(var(--jelly-pixel) * 3) currentColor;
             }
 
             .pixel-jellyfish::after {
               color: rgba(224, 242, 254, 0.85);
               box-shadow:
-                8px 4px currentColor,
-                12px 4px currentColor,
-                4px 16px currentColor,
-                8px 20px currentColor,
-                12px 16px currentColor,
-                16px 20px currentColor;
+                calc(var(--jelly-pixel) * 2) var(--jelly-pixel) currentColor,
+                calc(var(--jelly-pixel) * 3) var(--jelly-pixel) currentColor,
+                var(--jelly-pixel) calc(var(--jelly-pixel) * 4) currentColor,
+                calc(var(--jelly-pixel) * 2) calc(var(--jelly-pixel) * 5) currentColor,
+                calc(var(--jelly-pixel) * 3) calc(var(--jelly-pixel) * 4) currentColor,
+                calc(var(--jelly-pixel) * 4) calc(var(--jelly-pixel) * 5) currentColor;
             }
-
             .pixel-jellyfish-accent {
+              --jelly-pixel: clamp(3px, 0.75vw, 6px);
               color: #67e8f9;
             }
 
             .pixel-jellyfish-primary {
+              --jelly-pixel: clamp(3px, 0.5vw, 2.65px);
               color: #a78bfa;
-              transform: translate(-50%, 50%) scale(0.82);
+              transform: translate(-50%, 20%);
             }
           `}</style>
                 </section>
@@ -916,14 +960,18 @@ export default function App() {
                             const items = SKILLS.filter((s) => s.category === category);
                             return (
                                 <div key={category} className="mb-10 last:mb-0">
-                                    <h3 className="text-xs font-mono text-muted-foreground uppercase tracking-[0.18em] mb-4">
+                                    <h3 className="text-sm font-mono text-muted-foreground uppercase tracking-[0.14em] mb-4">
                                         {SKILL_LABELS[category]}
                                     </h3>
                                     <div className="flex flex-wrap gap-3">
                                         {items.map(({name, color, logo, invertLogo, logoBg}) => (
                                             <div
                                                 key={name}
-                                                className="group flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-card border border-border hover:border-primary/40 hover:bg-primary/5 transition-all duration-200 cursor-default"
+                                                className={`group flex items-center gap-2.5 px-4 py-2.5 rounded-xl border transition-all duration-200 cursor-default ${
+                                                    ["Python", "C++", "Java", "SQL"].includes(name)
+                                                        ? "bg-primary/12 border-primary/55 shadow-[0_0_18px_rgba(124,58,237,0.18)] hover:bg-primary/18 hover:border-primary/75"
+                                                        : "bg-card border-border hover:border-primary/40 hover:bg-primary/5"
+                                                }`}
                                             >
                                                 {logo ? (
                                                     <>
@@ -980,7 +1028,7 @@ export default function App() {
                             </h2>
                         </div>
 
-                        <div className="grid md:grid-cols-2 gap-6">
+                        <div className="grid grid-cols-1 gap-6">
                             {PROJECTS.map((project) => (
                                 <div
                                     key={project.title}
@@ -1262,7 +1310,10 @@ export default function App() {
                                         Thanks for reaching out — I'll get back to you soon.
                                     </p>
                                     <button
-                                        onClick={() => setFormSent(false)}
+                                        onClick={() => {
+                                            setFormSent(false);
+                                            setFormError("");
+                                        }}
                                         className="mt-6 text-sm text-primary hover:text-primary/75 transition-colors"
                                     >
                                         Send another message
@@ -1333,11 +1384,18 @@ export default function App() {
                                         />
                                     </div>
 
+                                    {formError && (
+                                        <p className="rounded-xl border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">
+                                            {formError}
+                                        </p>
+                                    )}
+
                                     <button
                                         type="submit"
-                                        className="w-full flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-primary text-primary-foreground font-medium text-sm hover:opacity-90 transition-opacity"
+                                        disabled={formSubmitting}
+                                        className="w-full flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-primary text-primary-foreground font-medium text-sm hover:opacity-90 transition-opacity disabled:cursor-not-allowed disabled:opacity-60"
                                     >
-                                        <Send size={15}/> Send Message
+                                        <Send size={15}/> {formSubmitting ? "Sending..." : "Send Message"}
                                     </button>
                                 </form>
                             )}
@@ -1349,10 +1407,16 @@ export default function App() {
                 <footer className="border-t border-border py-8">
                     <div
                         className="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
-                        <div className="font-display font-semibold">
-                            <span className="text-primary">{"<"}</span>
-                            Sum Yan Wan
-                            <span className="text-primary">{" />"}</span>
+                        <div className="font-display font-semibold flex items-center gap-2">
+                            <img
+                                src={idleDuck}
+                                alt=""
+                                aria-hidden="true"
+                                draggable="false"
+                                className="h-7 w-7 object-contain"
+                                style={{imageRendering: "pixelated"}}
+                            />
+                            <span><span className="text-primary">{"<"}</span>Sum Yan Wan<span className="text-primary">{"/>"}</span></span>
                         </div>
                         <div className="font-mono text-xs">
                             temp
