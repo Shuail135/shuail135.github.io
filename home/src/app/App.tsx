@@ -641,10 +641,10 @@ export default function App() {
 
                         {/* Avatar side */}
                         <div className="order-1 lg:order-2 flex justify-center">
-                            <div className="relative isolate w-64 h-64 lg:w-[380px] lg:h-[380px]">
+                            <div className="relative isolate w-64 h-64 [--avatar-size:16rem] lg:w-[380px] lg:h-[380px] lg:[--avatar-size:380px]">
                                 {/* Slow orbit rings */}
                                 <div
-                                    className="pointer-events-none absolute inset-0 z-30 rounded-full border border-primary/20"
+                                    className="pointer-events-none absolute -inset-[2%] z-30 rounded-full border border-primary/20"
                                     style={{
                                         animation: "spin 22s linear infinite",
                                     }}
@@ -653,7 +653,7 @@ export default function App() {
                                         className="pixel-jellyfish pixel-jellyfish-accent absolute top-0 left-1/2 z-[60] -translate-x-1/2 -translate-y-1/2"/>
                                 </div>
                                 <div
-                                    className="pointer-events-none absolute inset-5 z-50 rounded-full border border-accent/15"
+                                    className="pointer-events-none absolute inset-[6.5%] z-50 rounded-full border border-accent/15"
                                     style={{
                                         animation: "spin 16s linear infinite reverse",
                                     }}
@@ -663,7 +663,7 @@ export default function App() {
                                 </div>
                                 {/* Avatar container */}
                                 <div
-                                    className="absolute inset-10 rounded-full overflow-hidden border border-primary/25 shadow-2xl shadow-primary/15 bg-card">
+                                    className="absolute inset-[15.625%] rounded-full overflow-hidden border border-primary/25 shadow-2xl shadow-primary/15 bg-card">
                                     <div
                                         className="absolute inset-x-0 bottom-[-10px] h-[55%] overflow-hidden bg-sky-500/80"
                                         style={{
@@ -713,7 +713,7 @@ export default function App() {
                                     </div>
                                 </div>
                                 <div
-                                    className="absolute inset-10 z-40 cursor-pointer overflow-visible"
+                                    className="absolute inset-[15.625%] z-40 cursor-pointer overflow-visible"
                                     onClick={() => duckTriggerRef.current?.()}
                                     aria-hidden="true"
                                 >
@@ -835,7 +835,7 @@ export default function App() {
             }
 
             .pixel-jellyfish {
-              --jelly-pixel: clamp(5px, 1.5vw, 8px);
+              --jelly-pixel: calc(var(--avatar-size) * 0.0211);
               width: calc(var(--jelly-pixel) * 6);
               height: calc(var(--jelly-pixel) * 6);
               image-rendering: pixelated;
@@ -883,12 +883,12 @@ export default function App() {
                 calc(var(--jelly-pixel) * 4) calc(var(--jelly-pixel) * 5) currentColor;
             }
             .pixel-jellyfish-accent {
-              --jelly-pixel: clamp(3px, 0.75vw, 6px);
+              --jelly-pixel: calc(var(--avatar-size) * 0.019);
               color: #67e8f9;
             }
 
             .pixel-jellyfish-primary {
-              --jelly-pixel: clamp(3px, 0.5vw, 2.65px);
+              --jelly-pixel: calc(var(--avatar-size) * 0.0120);
               color: #a78bfa;
               transform: translate(-50%, 20%);
             }

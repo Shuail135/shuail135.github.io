@@ -40,6 +40,9 @@ jobs:
       - name: Build React Vite homepage
         working-directory: home
         run: npm run build
+        env:
+          VITE_WEB3FORMS_ACCESS_KEY: ${{ secrets.VITE_WEB3FORMS_ACCESS_KEY }}
+
 
       - name: Copy homepage build to public
         run: |
