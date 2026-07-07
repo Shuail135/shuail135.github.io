@@ -1,0 +1,271 @@
+.space-backdrop {
+  z-index: 0;
+  background:
+    radial-gradient(circle at 20% 18%, rgba(124, 58, 237, 0.16), transparent 28%),
+    radial-gradient(circle at 78% 28%, rgba(6, 182, 212, 0.11), transparent 24%),
+    radial-gradient(circle at 52% 86%, rgba(217, 70, 239, 0.1), transparent 28%),
+    var(--backdrop-gradient);
+}
+
+.space-backdrop::before,
+.space-backdrop::after,
+.pixel-stars {
+  content: "";
+  position: absolute;
+  inset: 0;
+  image-rendering: pixelated;
+}
+
+.space-backdrop::before {
+  background-image:
+    radial-gradient(circle at 11% 18%, rgba(255,255,255,0.62) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 27% 64%, rgba(147,197,253,0.48) 0 1px, transparent 1.6px),
+    radial-gradient(circle at 42% 31%, rgba(255,255,255,0.52) 0 1.2px, transparent 1.8px),
+    radial-gradient(circle at 66% 72%, rgba(186,230,253,0.5) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 83% 22%, rgba(255,255,255,0.58) 0 1.1px, transparent 1.8px);
+  background-size: 293px 241px, 367px 311px, 431px 353px, 509px 421px, 587px 463px;
+  background-position: 13px 29px, 91px 47px, 37px 113px, 149px 71px, 5px 181px;
+  opacity: 0.72;
+}
+
+.space-backdrop::after {
+  background-image:
+    radial-gradient(circle at 18% 42%, rgba(216,180,254,0.5) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 54% 17%, rgba(255,255,255,0.46) 0 1px, transparent 1.6px),
+    radial-gradient(circle at 72% 58%, rgba(125,211,252,0.42) 0 1.1px, transparent 1.7px),
+    radial-gradient(circle at 92% 83%, rgba(255,255,255,0.4) 0 0.8px, transparent 1.4px);
+  background-size: 641px 389px, 487px 557px, 733px 467px, 379px 619px;
+  background-position: 101px 0, 31px 83px, 211px 117px, 17px 241px;
+  opacity: 0.7;
+}
+
+
+.light .space-backdrop {
+
+}
+
+.light .space-backdrop::before {
+
+}
+
+.light .space-backdrop::after {
+
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes duckFloat {
+  0%, 100% { transform: translateY(0); }
+  25% { transform: translateY(-4px); }
+  50% { transform: translateY(-6px); }
+  75% { transform: translateY(-2px); }
+}
+
+@keyframes waterDriftSlow {
+  0% { background-position: 0 0, 0 0; }
+  100% { background-position: 0 8px, 6px 0; }
+}
+
+@keyframes waterDriftMedium {
+  0% { background-position: 0 0, 0 0; }
+  100% { background-position: 8px 0, 0 6px; }
+}
+
+@keyframes waterDriftFast {
+  0% { background-position: 0 0, 0 0; }
+  100% { background-position: 6px 0, 0 8px; }
+}
+
+@keyframes waterDriftSpeckles {
+  0% { background-position: 0 0; }
+  100% { background-position: 8px 6px; }
+}
+
+.duck-float {
+  animation: duckFloat 2.4s steps(4, end) infinite;
+  will-change: transform;
+}
+
+.water-drift-slow {
+  animation: waterDriftSlow 5.6s steps(4, end) infinite alternate;
+}
+
+.water-drift-medium {
+  animation: waterDriftMedium 4.8s steps(4, end) infinite alternate;
+}
+
+.water-drift-fast {
+  animation: waterDriftFast 4.2s steps(3, end) infinite alternate;
+}
+
+.water-drift-speckles {
+  animation: waterDriftSpeckles 6s steps(3, end) infinite alternate;
+}
+
+.pixel-creature {
+  --creature-pixel: calc(var(--avatar-size) * 0.0211);
+  width: calc(var(--creature-pixel) * 6);
+  height: calc(var(--creature-pixel) * 6);
+  image-rendering: pixelated;
+  filter: drop-shadow(0 0 0.33em currentColor);
+  color: var(--creature-accent);
+}
+
+.pixel-creature::before,
+.pixel-creature::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--creature-pixel);
+  height: var(--creature-pixel);
+  background: currentColor;
+}
+
+.pixel-creature::before {
+  box-shadow:
+    calc(var(--creature-pixel) * 2) 0 currentColor,
+    calc(var(--creature-pixel) * 3) 0 currentColor,
+    var(--creature-pixel) var(--creature-pixel) currentColor,
+    calc(var(--creature-pixel) * 2) var(--creature-pixel) currentColor,
+    calc(var(--creature-pixel) * 3) var(--creature-pixel) currentColor,
+    calc(var(--creature-pixel) * 4) var(--creature-pixel) currentColor,
+    var(--creature-pixel) calc(var(--creature-pixel) * 2) currentColor,
+    calc(var(--creature-pixel) * 2) calc(var(--creature-pixel) * 2) currentColor,
+    calc(var(--creature-pixel) * 3) calc(var(--creature-pixel) * 2) currentColor,
+    calc(var(--creature-pixel) * 4) calc(var(--creature-pixel) * 2) currentColor,
+    0 calc(var(--creature-pixel) * 3) currentColor,
+    calc(var(--creature-pixel) * 2) calc(var(--creature-pixel) * 3) currentColor,
+    calc(var(--creature-pixel) * 4) calc(var(--creature-pixel) * 3) currentColor,
+    calc(var(--creature-pixel) * 5) calc(var(--creature-pixel) * 3) currentColor;
+}
+
+.pixel-creature::after {
+  color: var(--creature-highlight);
+  box-shadow:
+    calc(var(--creature-pixel) * 2) var(--creature-pixel) currentColor,
+    calc(var(--creature-pixel) * 3) var(--creature-pixel) currentColor,
+    var(--creature-pixel) calc(var(--creature-pixel) * 4) currentColor,
+    calc(var(--creature-pixel) * 2) calc(var(--creature-pixel) * 5) currentColor,
+    calc(var(--creature-pixel) * 3) calc(var(--creature-pixel) * 4) currentColor,
+    calc(var(--creature-pixel) * 4) calc(var(--creature-pixel) * 5) currentColor;
+}
+.pixel-creature-accent {
+  --creature-pixel: calc(var(--avatar-size) * 0.019);
+  color: var(--creature-accent);
+}
+
+.pixel-creature-primary {
+  --creature-pixel: calc(var(--avatar-size) * 0.0120);
+  color: var(--creature-primary);
+  transform: translate(-50%, 20%);
+}
+.avatar-orbit-ring-outer {
+  border-color: var(--avatar-orbit-outer);
+}
+
+.avatar-orbit-ring-inner {
+  border-color: var(--avatar-orbit-inner);
+}
+/* Light theme renders orbit creatures as pixel crabs. */
+.light .pixel-creature {
+  width: calc(var(--creature-pixel) * 9);
+  height: calc(var(--creature-pixel) * 7);
+  color: var(--creature-primary);
+}
+
+.light .pixel-creature-accent {
+  color: #fb923c;
+}
+
+.light .pixel-creature-primary {
+  color: #f7748c;
+}
+
+.light .pixel-creature::before {
+  background: transparent;
+  box-shadow:
+    var(--creature-pixel) 0 currentColor,
+    calc(var(--creature-pixel) * 7) 0 currentColor,
+    0 var(--creature-pixel) currentColor,
+    var(--creature-pixel) var(--creature-pixel) currentColor,
+    calc(var(--creature-pixel) * 3) var(--creature-pixel) currentColor,
+    calc(var(--creature-pixel) * 4) var(--creature-pixel) currentColor,
+    calc(var(--creature-pixel) * 5) var(--creature-pixel) currentColor,
+    calc(var(--creature-pixel) * 7) var(--creature-pixel) currentColor,
+    calc(var(--creature-pixel) * 8) var(--creature-pixel) currentColor,
+    var(--creature-pixel) calc(var(--creature-pixel) * 2) currentColor,
+    calc(var(--creature-pixel) * 2) calc(var(--creature-pixel) * 2) currentColor,
+    calc(var(--creature-pixel) * 3) calc(var(--creature-pixel) * 2) currentColor,
+    calc(var(--creature-pixel) * 4) calc(var(--creature-pixel) * 2) currentColor,
+    calc(var(--creature-pixel) * 5) calc(var(--creature-pixel) * 2) currentColor,
+    calc(var(--creature-pixel) * 6) calc(var(--creature-pixel) * 2) currentColor,
+    calc(var(--creature-pixel) * 7) calc(var(--creature-pixel) * 2) currentColor,
+    calc(var(--creature-pixel) * 2) calc(var(--creature-pixel) * 3) currentColor,
+    calc(var(--creature-pixel) * 3) calc(var(--creature-pixel) * 3) currentColor,
+    calc(var(--creature-pixel) * 4) calc(var(--creature-pixel) * 3) currentColor,
+    calc(var(--creature-pixel) * 5) calc(var(--creature-pixel) * 3) currentColor,
+    calc(var(--creature-pixel) * 6) calc(var(--creature-pixel) * 3) currentColor,
+    var(--creature-pixel) calc(var(--creature-pixel) * 4) currentColor,
+    calc(var(--creature-pixel) * 2) calc(var(--creature-pixel) * 4) currentColor,
+    calc(var(--creature-pixel) * 3) calc(var(--creature-pixel) * 4) currentColor,
+    calc(var(--creature-pixel) * 4) calc(var(--creature-pixel) * 4) currentColor,
+    calc(var(--creature-pixel) * 5) calc(var(--creature-pixel) * 4) currentColor,
+    calc(var(--creature-pixel) * 6) calc(var(--creature-pixel) * 4) currentColor,
+    calc(var(--creature-pixel) * 7) calc(var(--creature-pixel) * 4) currentColor,
+    0 calc(var(--creature-pixel) * 5) currentColor,
+    calc(var(--creature-pixel) * 2) calc(var(--creature-pixel) * 5) currentColor,
+    calc(var(--creature-pixel) * 6) calc(var(--creature-pixel) * 5) currentColor,
+    calc(var(--creature-pixel) * 8) calc(var(--creature-pixel) * 5) currentColor;
+}
+
+.light .pixel-creature::after {
+  color: rgba(255, 255, 255, 0.7);
+  background: transparent;
+  box-shadow:
+    calc(var(--creature-pixel) * 3) 0 currentColor,
+    calc(var(--creature-pixel) * 5) 0 currentColor,
+    calc(var(--creature-pixel) * 3) calc(var(--creature-pixel) * 2) currentColor,
+    calc(var(--creature-pixel) * 5) calc(var(--creature-pixel) * 2) currentColor,
+    var(--creature-pixel) calc(var(--creature-pixel) * 5) currentColor,
+    calc(var(--creature-pixel) * 3) calc(var(--creature-pixel) * 6) currentColor,
+    calc(var(--creature-pixel) * 5) calc(var(--creature-pixel) * 6) currentColor,
+    calc(var(--creature-pixel) * 7) calc(var(--creature-pixel) * 5) currentColor;
+}
+.avatar-theme-overlay {
+  position: absolute;
+  inset: 15.625%;
+  z-index: 40;
+  cursor: pointer;
+  overflow: visible;
+}
+
+.avatar-theme-overlay-image {
+  pointer-events: none;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  max-width: none;
+  transform: translate(-50%, -50%);
+  user-select: none;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  image-rendering: pixelated;
+}
+
+.dark .avatar-theme-overlay-image {
+  width: 130%;
+  height: 130%;
+  background-image: url("../../img/submarine_window.png");
+  transform: translate(-50%, -50%);
+}
+
+.light .avatar-theme-overlay-image {
+  width: 140%;
+  height: 140%;
+  background-image: url("../../img/swim_ring.png");
+}
