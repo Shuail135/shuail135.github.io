@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -27,19 +28,27 @@ jobs:
         with:
           node-version: 22
 
-      - name: Create output folder
+      - name: Create clean output folder
         run: |
-          rm -rf dist
-          mkdir -p dist
+          rm -rf public
+          mkdir -p public
 
-      - name: Copy portfolio homepage
+      - name: Install homepage dependencies
+        working-directory: home
+        run: npm ci
+
+      - name: Build React Vite homepage
+        working-directory: home
+        run: npm run build
+
+      - name: Copy homepage build to public
         run: |
-          cp -r public/. dist/
-          touch dist/.nojekyll
+          cp -r home/dist/. public/
+          touch public/.nojekyll
 
       - name: Install Quartz dependencies
         working-directory: music-production-for-dummies/quartz
-        run: npm install
+        run: npm ci
 
       - name: Install Quartz plugins
         working-directory: music-production-for-dummies/quartz
@@ -47,12 +56,12 @@ jobs:
 
       - name: Build Quartz
         working-directory: music-production-for-dummies/quartz
-        run: npx quartz build -d ../content -o ../../dist/music-production-for-dummies
+        run: npx quartz build -d ../content -o ../../public/music-production-for-dummies
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: public
 
   deploy:
     needs: build
