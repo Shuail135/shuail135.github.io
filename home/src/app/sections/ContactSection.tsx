@@ -48,12 +48,14 @@ export function ContactSection({
                             const icon = kind === "email" ? <Mail size={16}/> : kind === "github" ? <Github size={16}/> : <Linkedin size={16}/>;
                             const isEmail = href.startsWith("mailto:");
                             return (
-                                <a key={label} href={href} target={isEmail ? undefined : "_blank"} rel={isEmail ? undefined : "noopener noreferrer"} className="group flex items-center gap-3.5 text-muted-foreground hover:text-foreground transition-colors">
-                                    <div className="w-10 h-10 rounded-xl bg-card border border-border flex items-center justify-center group-hover:border-primary/40 group-hover:bg-primary/8 transition-all duration-200">
+                                <div key={label} className="flex items-center gap-3.5 text-muted-foreground">
+                                    <a href={href} target={isEmail ? undefined : "_blank"} rel={isEmail ? undefined : "noopener noreferrer"} className="w-10 h-10 rounded-xl bg-card border border-border flex items-center justify-center transition-all duration-200 hover:border-primary/40 hover:bg-primary/8 hover:text-foreground">
                                         {icon}
-                                    </div>
-                                    <span className="text-sm">{label}</span>
-                                </a>
+                                    </a>
+                                    <a href={href} target={isEmail ? undefined : "_blank"} rel={isEmail ? undefined : "noopener noreferrer"} className="text-sm transition-colors hover:text-foreground">
+                                        {label}
+                                    </a>
+                                </div>
                             );
                         })}
                     </div>
@@ -138,3 +140,5 @@ export function ContactSection({
         </section>
     );
 }
+
+

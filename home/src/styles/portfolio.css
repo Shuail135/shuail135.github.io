@@ -601,6 +601,7 @@
 .avatar-scene-frame {
   width: var(--avatar-size-mobile);
   height: var(--avatar-size-mobile);
+  --avatar-size: var(--avatar-size-mobile);
 }
 
 .avatar-water {

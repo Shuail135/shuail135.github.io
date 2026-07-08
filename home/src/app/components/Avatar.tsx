@@ -60,13 +60,13 @@ export function AvatarScene({
         <div className="avatar-scene-frame relative isolate">
             <div
                 className="pointer-events-none absolute -inset-[2%] z-0 rounded-full border avatar-orbit-ring-outer"
-                style={{animation: "spin 22s linear infinite"}}
+                style={{animation: "spin 28s linear infinite"}}
             >
                 <PixelCreature className="pixel-creature pixel-creature-accent absolute top-0 left-1/2 z-[60] -translate-x-1/2 -translate-y-1/2"/>
             </div>
             <div
                 className="pointer-events-none absolute inset-[6.5%] z-0 rounded-full border avatar-orbit-ring-inner"
-                style={{animation: "spin 16s linear infinite reverse"}}
+                style={{animation: "spin 20s linear infinite reverse"}}
             />
             <div className="absolute inset-[15.625%] z-20 rounded-full overflow-hidden border border-primary/25 shadow-2xl shadow-primary/15 bg-card">
                 <div className="avatar-water absolute inset-x-0 overflow-hidden bg-sky-500/80">
@@ -88,7 +88,7 @@ export function AvatarScene({
             </div>
             <div
                 className="top-creature-layer pointer-events-none absolute inset-[6.5%] z-[80] rounded-full"
-                style={{animation: "spin 16s linear infinite reverse"}}
+                style={{animation: "spin 20s linear infinite reverse"}}
             >
                 <PixelCreature className="pixel-creature pixel-creature-primary absolute bottom-0 left-1/2 z-[90] -translate-x-1/2 translate-y-1/2"/>
             </div>
