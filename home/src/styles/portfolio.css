@@ -78,51 +78,12 @@
 }
 
 .light .space-backdrop::before {
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.98' numOctaves='4' seed='12'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.50 0 0 0 0 0.36 0 0 0 0 0.18 0 0 0 0.34 0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E"),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.35' numOctaves='3' seed='28'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 0.97 0 0 0 0 0.82 0 0 0 0.26 0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E"),
-    radial-gradient(circle at 13px 17px, rgba(132, 92, 43, 0.26) 0, rgba(132, 92, 43, 0.26) 0.95px, transparent 1.35px),
-    radial-gradient(circle at 39px 43px, rgba(255, 254, 243, 0.54) 0, rgba(255, 254, 243, 0.54) 0.95px, transparent 1.35px),
-    radial-gradient(circle at 71px 25px, rgba(170, 122, 58, 0.22) 0, rgba(170, 122, 58, 0.22) 0.9px, transparent 1.3px),
-    radial-gradient(circle at 93px 57px, rgba(116, 86, 48, 0.19) 0, rgba(116, 86, 48, 0.19) 0.85px, transparent 1.24px),
-    radial-gradient(circle at 127px 37px, rgba(255, 248, 222, 0.46) 0, rgba(255, 248, 222, 0.46) 0.95px, transparent 1.34px),
-    radial-gradient(circle at 9px 9px, rgba(122, 89, 48, 0.22) 0, rgba(122, 89, 48, 0.22) 0.68px, transparent 1.02px),
-    radial-gradient(circle at 24px 18px, rgba(255, 255, 246, 0.44) 0, rgba(255, 255, 246, 0.44) 0.72px, transparent 1.08px),
-    radial-gradient(circle at 17px 27px, rgba(118, 86, 47, 0.22) 0, rgba(118, 86, 47, 0.22) 0.62px, transparent 0.98px),
-    radial-gradient(circle at 33px 7px, rgba(190, 144, 78, 0.20) 0, rgba(190, 144, 78, 0.20) 0.66px, transparent 1.02px),
-    radial-gradient(circle at 48px 31px, rgba(255, 255, 248, 0.40) 0, rgba(255, 255, 248, 0.40) 0.72px, transparent 1.08px),
-    radial-gradient(circle at 7px 21px, rgba(143, 101, 51, 0.18) 0, rgba(143, 101, 51, 0.18) 0.58px, transparent 0.92px),
-    radial-gradient(circle at 29px 4px, rgba(255, 252, 232, 0.36) 0, rgba(255, 252, 232, 0.36) 0.62px, transparent 0.98px),
-    radial-gradient(circle at 52px 24px, rgba(164, 116, 58, 0.16) 0, rgba(164, 116, 58, 0.16) 0.58px, transparent 0.92px),
-    radial-gradient(circle at 73px 39px, rgba(255, 255, 247, 0.34) 0, rgba(255, 255, 247, 0.34) 0.58px, transparent 0.94px),
-    radial-gradient(circle at 4px 6px, rgba(111, 82, 43, 0.16) 0, rgba(111, 82, 43, 0.16) 0.45px, transparent 0.78px),
-    radial-gradient(circle at 12px 19px, rgba(191, 142, 71, 0.15) 0, rgba(191, 142, 71, 0.15) 0.46px, transparent 0.8px),
-    radial-gradient(circle at 23px 10px, rgba(255, 253, 238, 0.32) 0, rgba(255, 253, 238, 0.32) 0.5px, transparent 0.84px),
-    radial-gradient(circle at 31px 27px, rgba(137, 98, 49, 0.14) 0, rgba(137, 98, 49, 0.14) 0.42px, transparent 0.76px),
-    radial-gradient(circle at 5px 11px, rgba(129, 93, 48, 0.10) 0, rgba(129, 93, 48, 0.10) 0.36px, transparent 0.68px),
-    radial-gradient(circle at 18px 3px, rgba(255, 252, 237, 0.24) 0, rgba(255, 252, 237, 0.24) 0.38px, transparent 0.7px),
-    radial-gradient(circle at 27px 23px, rgba(176, 125, 60, 0.16) 0, rgba(176, 125, 60, 0.16) 0.5px, transparent 0.84px),
-    radial-gradient(circle at 41px 15px, rgba(111, 82, 45, 0.08) 0, rgba(111, 82, 45, 0.08) 0.34px, transparent 0.64px),
-    radial-gradient(circle at 56px 29px, rgba(255, 255, 245, 0.20) 0, rgba(255, 255, 245, 0.20) 0.38px, transparent 0.7px),
-    radial-gradient(circle at 69px 8px, rgba(151, 108, 53, 0.15) 0, rgba(151, 108, 53, 0.15) 0.48px, transparent 0.82px),
-    radial-gradient(circle at 82px 34px, rgba(255, 249, 224, 0.30) 0, rgba(255, 249, 224, 0.30) 0.52px, transparent 0.86px),
-    radial-gradient(circle at 6px 5px, rgba(122, 89, 48, 0.12) 0, rgba(122, 89, 48, 0.12) 0.34px, transparent 0.62px),
-    radial-gradient(circle at 19px 14px, rgba(255, 253, 238, 0.20) 0, rgba(255, 253, 238, 0.20) 0.36px, transparent 0.66px),
-    radial-gradient(circle at 31px 4px, rgba(171, 121, 57, 0.10) 0, rgba(171, 121, 57, 0.10) 0.32px, transparent 0.6px),
-    radial-gradient(circle at 45px 21px, rgba(111, 82, 43, 0.09) 0, rgba(111, 82, 43, 0.09) 0.32px, transparent 0.58px),
-    radial-gradient(circle at 58px 9px, rgba(255, 255, 246, 0.18) 0, rgba(255, 255, 246, 0.18) 0.34px, transparent 0.62px),
-    radial-gradient(circle at 71px 30px, rgba(151, 108, 53, 0.09) 0, rgba(151, 108, 53, 0.09) 0.3px, transparent 0.58px),
-    radial-gradient(circle at 9px 33px, rgba(255, 248, 222, 0.16) 0, rgba(255, 248, 222, 0.16) 0.34px, transparent 0.62px),
-    radial-gradient(circle at 36px 37px, rgba(137, 98, 49, 0.08) 0, rgba(137, 98, 49, 0.08) 0.3px, transparent 0.56px),
-    radial-gradient(circle at 63px 42px, rgba(255, 252, 237, 0.18) 0, rgba(255, 252, 237, 0.18) 0.34px, transparent 0.62px),
-    radial-gradient(circle at 88px 15px, rgba(176, 125, 60, 0.08) 0, rgba(176, 125, 60, 0.08) 0.3px, transparent 0.56px),
-    radial-gradient(circle at 104px 36px, rgba(255, 255, 247, 0.16) 0, rgba(255, 255, 247, 0.16) 0.34px, transparent 0.62px),
-    radial-gradient(circle at 119px 22px, rgba(132, 92, 43, 0.08) 0, rgba(132, 92, 43, 0.08) 0.3px, transparent 0.56px);
-  background-size: 180px 180px, 220px 220px, 419px 337px, 557px 431px, 683px 509px, 797px 613px, 929px 701px, 149px 113px, 173px 137px, 211px 157px, 263px 191px, 307px 223px, 127px 97px, 181px 131px, 229px 173px, 281px 199px, 151px 109px, 197px 149px, 251px 179px, 331px 241px, 167px 127px, 193px 139px, 277px 211px, 311px 233px, 359px 269px, 401px 293px, 449px 331px, 97px 71px, 113px 83px, 131px 97px, 149px 109px, 163px 127px, 181px 139px, 199px 151px, 223px 167px, 241px 181px, 263px 197px, 281px 211px, 307px 229px;
-  background-position: 0 0, 37px 19px, 23px 41px, 137px 89px, 61px 211px, 283px 127px, 11px 337px, 7px 13px, 41px 29px, 19px 67px, 83px 17px, 131px 73px, 11px 5px, 37px 61px, 73px 23px, 109px 91px, 17px 31px, 59px 7px, 101px 43px, 149px 97px, 5px 19px, 47px 3px, 89px 53px, 127px 31px, 13px 107px, 173px 71px, 211px 29px, 3px 7px, 29px 13px, 47px 5px, 71px 37px, 101px 17px, 137px 59px, 167px 29px, 193px 83px, 223px 41px, 251px 107px, 271px 67px, 293px 23px;
+  background-image: url("../../img/sand_texture.png");
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
   opacity: var(--light-sand-opacity, 1);
-  transform: rotate(0.35deg) scale(1.035);
-  transform-origin: center;
+  transform: none;
 }
 
 .light .space-backdrop::after {
@@ -389,15 +350,15 @@
 }
 
 .dark .avatar-theme-overlay-image {
-  width: 130%;
-  height: 130%;
+  width: var(--avatar-submarine-overlay-size);
+  height: var(--avatar-submarine-overlay-size);
   background-image: url("../../img/submarine_window.png");
   transform: translate(-50%, -50%);
 }
 
 .light .avatar-theme-overlay-image {
-  width: 140%;
-  height: 140%;
+  width: var(--avatar-swim-ring-overlay-size);
+  height: var(--avatar-swim-ring-overlay-size);
   background-image: url("../../img/swim_ring.png");
 }
 .dark .pixel-creature::after {
@@ -583,25 +544,25 @@
 
 
 .light .theme-toggle-button {
-  background: #0e0e1c;
-  border-color: rgba(139, 92, 246, 0.35);
-  color: #f0effb;
+  background: var(--theme-toggle-dark-bg);
+  border-color: var(--theme-toggle-dark-border);
+  color: var(--theme-toggle-dark-text);
 }
 
 .light .theme-toggle-button:hover {
-  background: #1a1830;
-  border-color: rgba(167, 139, 250, 0.7);
+  background: var(--theme-toggle-dark-bg-hover);
+  border-color: var(--theme-toggle-dark-border-hover);
 }
 
 .dark .theme-toggle-button {
-  background: #fffaf0;
-  border-color: rgba(180, 83, 9, 0.35);
-  color: #2f261c;
+  background: var(--theme-toggle-light-bg);
+  border-color: var(--theme-toggle-light-border);
+  color: var(--theme-toggle-light-text);
 }
 
 .dark .theme-toggle-button:hover {
-  background: #f3e4c8;
-  border-color: rgba(180, 83, 9, 0.6);
+  background: var(--theme-toggle-light-bg-hover);
+  border-color: var(--theme-toggle-light-border-hover);
 }
 
 
@@ -614,7 +575,7 @@
 @media (prefers-reduced-motion: no-preference) {
   ::view-transition-old(root),
   ::view-transition-new(root) {
-    animation-duration: 720ms;
+    animation-duration: var(--theme-wipe-duration);
     animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
     mix-blend-mode: normal;
   }
@@ -633,6 +594,52 @@
     clip-path: circle(0 at 0 0);
   }
   to {
-    clip-path: circle(150vmax at 0 0);
+    clip-path: circle(var(--theme-wipe-radius) at 0 0);
+  }
+}
+
+.avatar-scene-frame {
+  width: var(--avatar-size-mobile);
+  height: var(--avatar-size-mobile);
+}
+
+.avatar-water {
+  bottom: var(--avatar-water-bottom);
+  height: var(--avatar-water-height);
+  clip-path: polygon(0 22px, 4% 22px, 4% 18px, 8% 18px, 8% 14px, 12% 14px, 12% 10px, 18% 10px, 18% 6px, 24% 6px, 24% 10px, 30% 10px, 30% 14px, 36% 14px, 36% 18px, 42% 18px, 42% 14px, 48% 14px, 48% 10px, 54% 10px, 54% 6px, 60% 6px, 60% 4px, 66% 4px, 66% 8px, 72% 8px, 72% 12px, 78% 12px, 78% 16px, 84% 16px, 84% 20px, 90% 20px, 90% 16px, 96% 16px, 96% 20px, 100% 20px, 100% 100%, 0 100%);
+}
+
+.avatar-water-slow,
+.avatar-water-medium,
+.avatar-water-fast,
+.avatar-water-speckles {
+  image-rendering: pixelated;
+}
+
+.avatar-water-slow {
+  background-image: linear-gradient(180deg, rgba(96,165,250,0.94) 0 8px, rgba(14,165,233,0.95) 8px 18px, rgba(2,132,199,0.94) 18px 30px, rgba(56,189,248,0.9) 30px 42px), linear-gradient(90deg, rgba(186,230,253,0.14) 0 6px, transparent 6px 22px, rgba(7,89,133,0.18) 22px 30px, transparent 30px 42px);
+  background-size: 100% 42px, 42px 100%;
+}
+
+.avatar-water-medium {
+  background-image: linear-gradient(90deg, transparent 0 8px, rgba(191,219,254,0.3) 8px 14px, transparent 14px 28px, rgba(12,74,110,0.22) 28px 36px, transparent 36px 48px), linear-gradient(180deg, transparent 0 6px, rgba(125,211,252,0.13) 6px 12px, transparent 12px 24px, rgba(3,105,161,0.18) 24px 32px, transparent 32px 42px);
+  background-size: 48px 38px, 54px 42px;
+}
+
+.avatar-water-fast {
+  background-image: linear-gradient(90deg, transparent 0 10px, rgba(186,230,253,0.36) 10px 16px, transparent 16px 32px, rgba(147,197,253,0.3) 32px 38px, transparent 38px 56px), linear-gradient(180deg, transparent 0 14px, rgba(2,132,199,0.2) 14px 20px, transparent 20px 34px, rgba(224,242,254,0.24) 34px 40px, transparent 40px 56px);
+  background-size: 56px 44px, 62px 56px;
+}
+
+.avatar-water-speckles {
+  background-image: radial-gradient(circle at 12px 12px, rgba(224,242,254,0.34) 0, rgba(224,242,254,0.34) 3px, transparent 4px), radial-gradient(circle at 34px 28px, rgba(7,89,133,0.22) 0, rgba(7,89,133,0.22) 4px, transparent 5px), radial-gradient(circle at 50px 18px, rgba(125,211,252,0.24) 0, rgba(125,211,252,0.24) 3px, transparent 4px);
+  background-size: 64px 48px;
+}
+
+@media (min-width: 1024px) {
+  .avatar-scene-frame {
+    width: var(--avatar-size-desktop);
+    height: var(--avatar-size-desktop);
+    --avatar-size: var(--avatar-size-desktop);
   }
 }

@@ -1,0 +1,28 @@
+:root {
+  /* Layout: shared page width and hero/avatar sizing. */
+  --site-content-max-width: 80rem;
+  --avatar-size-mobile: 16rem;
+  --avatar-size-desktop: 380px;
+
+  /* Avatar scene: waterline position and overlay sizing. */
+  --avatar-water-bottom: -10px;
+  --avatar-water-height: 55%;
+  --avatar-submarine-overlay-size: 130%;
+  --avatar-swim-ring-overlay-size: 140%;
+
+  /* Theme transition: full-screen wipe timing and coverage. */
+  --theme-wipe-duration: 720ms;
+  --theme-wipe-radius: 150vmax;
+
+  /* Theme switch button: each active theme shows the opposite theme inside the control. */
+  --theme-toggle-dark-bg: #0e0e1c;
+  --theme-toggle-dark-bg-hover: #1a1830;
+  --theme-toggle-dark-text: #f0effb;
+  --theme-toggle-dark-border: rgba(139, 92, 246, 0.35);
+  --theme-toggle-dark-border-hover: rgba(167, 139, 250, 0.7);
+  --theme-toggle-light-bg: #fffaf0;
+  --theme-toggle-light-bg-hover: #f3e4c8;
+  --theme-toggle-light-text: #2f261c;
+  --theme-toggle-light-border: rgba(180, 83, 9, 0.35);
+  --theme-toggle-light-border-hover: rgba(180, 83, 9, 0.6);
+}

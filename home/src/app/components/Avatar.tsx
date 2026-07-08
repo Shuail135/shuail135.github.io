@@ -42,6 +42,59 @@ const duckFrames: Record<
     },
 };
 
+
+function PixelCreature({className}: { className: string }) {
+    return (
+        <div className={className}>
+            <span className="pixel-creature-tentacle-right"/>
+        </div>
+    );
+}
+
+export function AvatarScene({
+                                triggerRef,
+                            }: {
+    triggerRef: { current: (() => void) | null };
+}) {
+    return (
+        <div className="avatar-scene-frame relative isolate">
+            <div
+                className="pointer-events-none absolute -inset-[2%] z-0 rounded-full border avatar-orbit-ring-outer"
+                style={{animation: "spin 22s linear infinite"}}
+            >
+                <PixelCreature className="pixel-creature pixel-creature-accent absolute top-0 left-1/2 z-[60] -translate-x-1/2 -translate-y-1/2"/>
+            </div>
+            <div
+                className="pointer-events-none absolute inset-[6.5%] z-0 rounded-full border avatar-orbit-ring-inner"
+                style={{animation: "spin 16s linear infinite reverse"}}
+            />
+            <div className="absolute inset-[15.625%] z-20 rounded-full overflow-hidden border border-primary/25 shadow-2xl shadow-primary/15 bg-card">
+                <div className="avatar-water absolute inset-x-0 overflow-hidden bg-sky-500/80">
+                    <div className="water-drift-slow avatar-water-slow absolute inset-0 opacity-95"/>
+                    <div className="water-drift-medium avatar-water-medium absolute inset-0 opacity-75"/>
+                    <div className="water-drift-fast avatar-water-fast absolute inset-0 opacity-60"/>
+                    <div className="water-drift-speckles avatar-water-speckles absolute inset-0 opacity-65"/>
+                </div>
+                <div className="relative z-10 w-full h-full">
+                    <Avatar triggerRef={triggerRef}/>
+                </div>
+            </div>
+            <div
+                className="avatar-theme-overlay"
+                onClick={() => triggerRef.current?.()}
+                aria-hidden="true"
+            >
+                <div className="avatar-theme-overlay-image"/>
+            </div>
+            <div
+                className="top-creature-layer pointer-events-none absolute inset-[6.5%] z-[80] rounded-full"
+                style={{animation: "spin 16s linear infinite reverse"}}
+            >
+                <PixelCreature className="pixel-creature pixel-creature-primary absolute bottom-0 left-1/2 z-[90] -translate-x-1/2 translate-y-1/2"/>
+            </div>
+        </div>
+    );
+}
 export function Avatar({
                            triggerRef,
                        }: {
