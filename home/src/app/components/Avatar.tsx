@@ -206,8 +206,8 @@ export function Avatar({
                     src={src}
                     alt="Rubber duck"
                     draggable="false"
-                    className="w-[150px] h-[150px] lg:w-[250px] lg:h-[250px] object-contain select-none"
-                    style={{imageRendering: "pixelated"}}
+                    className="object-contain select-none"
+                    style={{width: "var(--duck-size)", height: "var(--duck-size)", imageRendering: "pixelated"}}
                     onPointerDown={(e) => {
                         e.currentTarget.style.transform = "translateY(2px)";
                     }}
@@ -225,3 +225,5 @@ export function Avatar({
         </div>
     );
 }
+
+
