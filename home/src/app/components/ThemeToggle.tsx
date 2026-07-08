@@ -1,6 +1,6 @@
 import {PiSunglassesDuotone} from "react-icons/pi";
 import {TbPlanet} from "react-icons/tb";
-import type {ThemeMode} from "../types";
+import type {ThemeMode} from "../theme";
 
 export function ThemeToggle({
                                 theme,

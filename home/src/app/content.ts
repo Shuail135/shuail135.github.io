@@ -142,10 +142,10 @@ export const CONTENT = {
         eyebrow: "Get in Touch",
         heading: {
             first: "Let's",
-            primary: "connect",
+            primary: "Connect",
         },
         description: "Whether it's about a project, an opportunity, or just something interesting, " +
-            "feel free to send me a message. I'd be happy to hear from you. ",
+            "feel free to send me a message! ",
         links: [
             {kind: "email", label: "sumyanwan@gmail.com", href: "mailto:sumyanwan@gmail.com"},
             {kind: "github", label: "github.com/Shuail135", href: "https://github.com/Shuail135"},
@@ -158,9 +158,9 @@ export const CONTENT = {
             nameLabel: "Name",
             namePlaceholder: "Your name",
             emailLabel: "Email",
-            emailPlaceholder: "your@email.com",
+            emailPlaceholder: "example@email.com",
             messageLabel: "Enquiry / Message",
-            messagePlaceholder: "Tell me about your project, ask a question, or just say hello...",
+            messagePlaceholder: "Text Here",
             submit: "Send Message",
             submitting: "Sending...",
             errors: {
@@ -172,6 +172,6 @@ export const CONTENT = {
 
     // Footer text.
     footer: {
-        note: "temp",
+        note: "QuackQuack",
     },
 } as const;

@@ -17,21 +17,18 @@ import {
 import resumePdf from "../../pdf/Résumé.pdf";
 import {NAV_ITEMS, PROJECTS, SKILL_CATEGORIES, SKILL_LABELS, SKILLS} from "./data";
 import {CONTENT} from "./content";
-import type {Section, ThemeMode} from "./types";
+import type {Section} from "./types";
+import {applyThemePreference, getStoredTheme, type ThemeMode} from "./theme";
 import {Avatar, idleDuck} from "./components/Avatar";
 import {ThemeToggle} from "./components/ThemeToggle";
 import {WaveformViz} from "./components/WaveformViz";
 
 const WEB3FORMS_ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY as string | undefined;
-
 // ── App ────────────────────────────────────────────────────────────────────
 export default function App() {
     const [activeSection, setActiveSection] = useState<Section>("home");
     const [menuOpen, setMenuOpen] = useState(false);
-    const [theme, setTheme] = useState<ThemeMode>(() => {
-        if (typeof window === "undefined") return "dark";
-        return (window.localStorage.getItem("theme") as ThemeMode | null) ?? "dark";
-    });
+    const [theme, setTheme] = useState<ThemeMode>(getStoredTheme);
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -43,10 +40,45 @@ export default function App() {
     const avatarTriggerRef = useRef<(() => void) | null>(null);
 
     useEffect(() => {
-        document.documentElement.classList.toggle("dark", theme === "dark");
-        document.documentElement.classList.toggle("light", theme === "light");
-        window.localStorage.setItem("theme", theme);
+        applyThemePreference(theme);
     }, [theme]);
+
+    useEffect(() => {
+        let frameId = 0;
+
+        const updateLightBackdrop = () => {
+            const maxScroll = Math.max(
+                document.documentElement.scrollHeight - window.innerHeight,
+                1
+            );
+            const transitionDistance = Math.max(window.innerHeight * 2.8, 1);
+            const progress = Math.min(Math.max((window.scrollY - window.innerHeight * 0.12) / transitionDistance, 0), 1);
+            const easedProgress = progress * progress * (3 - 2 * progress);
+            const oceanOffset = 50 - easedProgress * 59;
+            const oceanOpacity = 0.22 + easedProgress * 0.48;
+            const sandOpacity = 1 - easedProgress * 0.18;
+
+            document.documentElement.style.setProperty("--light-ocean-offset", `${oceanOffset}vh`);
+            document.documentElement.style.setProperty("--light-ocean-opacity", oceanOpacity.toFixed(3));
+            document.documentElement.style.setProperty("--light-sand-opacity", sandOpacity.toFixed(3));
+            document.documentElement.style.setProperty("--light-scroll-progress", easedProgress.toFixed(3));
+        };
+
+        const scheduleUpdate = () => {
+            window.cancelAnimationFrame(frameId);
+            frameId = window.requestAnimationFrame(updateLightBackdrop);
+        };
+
+        updateLightBackdrop();
+        window.addEventListener("scroll", scheduleUpdate, {passive: true});
+        window.addEventListener("resize", scheduleUpdate);
+
+        return () => {
+            window.cancelAnimationFrame(frameId);
+            window.removeEventListener("scroll", scheduleUpdate);
+            window.removeEventListener("resize", scheduleUpdate);
+        };
+    }, []);
 
     const toggleTheme = () => setTheme((current) => current === "dark" ? "light" : "dark");
 
@@ -202,22 +234,25 @@ export default function App() {
                     id="home"
                     className="relative min-h-screen flex items-center overflow-hidden"
                 >
-                    {/* Ambient glows */}
                     <div className="absolute inset-0 pointer-events-none select-none">
-                        <div
-                            className="absolute -top-28 left-1/4 w-[560px] h-[560px] rounded-full bg-violet-600/16 blur-3xl"/>
-                        <div
-                            className="absolute top-1/3 right-1/6 w-[420px] h-[420px] rounded-full bg-cyan-400/10 blur-3xl"/>
-                        <div
-                            className="absolute bottom-10 left-1/3 w-[360px] h-[360px] rounded-full bg-fuchsia-500/10 blur-3xl"/>
+                        {theme === "dark" && (
+                            <>
+                                <div
+                                    className="absolute -top-28 left-1/4 w-[560px] h-[560px] rounded-full bg-violet-600/16 blur-3xl"/>
+                                <div
+                                    className="absolute top-1/3 right-1/6 w-[420px] h-[420px] rounded-full bg-cyan-400/10 blur-3xl"/>
+                                <div
+                                    className="absolute bottom-10 left-1/3 w-[360px] h-[360px] rounded-full bg-fuchsia-500/10 blur-3xl"/>
+                            </>
+                        )}
                         <div className="pixel-stars absolute inset-0 opacity-70"/>
                     </div>
 
-                    <div className="max-w-7xl mx-auto px-6 py-28 grid lg:grid-cols-2 gap-16 items-center w-full">
+                    <div className="max-w-7xl mx-auto px-6 pt-14 pb-20 lg:pt-10 lg:pb-16 grid lg:grid-cols-2 gap-12 lg:gap-14 items-center w-full">
                         {/* Text side */}
                         <div className="order-2 lg:order-1">
                             <div
-                                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-primary/30 bg-primary/10 text-primary text-xs font-mono mb-8">
+                                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-primary/30 bg-primary/10 text-primary text-xs font-mono mb-6">
                                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"/>
                                 {CONTENT.hero.status}
                             </div>
@@ -225,7 +260,7 @@ export default function App() {
                             <h1 className="text-5xl lg:text-[4.5rem] font-display font-extrabold leading-[1.06] tracking-tight mb-6">
                                 {CONTENT.hero.greetingPrefix}{" "}
                                 <span
-                                    className="inline-block bg-clip-text text-transparent"
+                                    className="hero-name inline-block bg-clip-text text-transparent"
                                     style={{
                                         backgroundImage: "var(--name-gradient)",
                                         WebkitBackgroundClip: "text",
@@ -339,7 +374,7 @@ export default function App() {
                                             style={{
                                                 imageRendering: "pixelated",
                                                 backgroundImage:
-                                                    "radial-gradient(circle at 12px 12px, rgba(224,242,254,0.34) 0 3px, transparent 4px), radial-gradient(circle at 34px 28px, rgba(7,89,133,0.22) 0 4px, transparent 5px), radial-gradient(circle at 50px 18px, rgba(125,211,252,0.24) 0 3px, transparent 4px)",
+                                                    "radial-gradient(circle at 12px 12px, rgba(224,242,254,0.34) 0, rgba(224,242,254,0.34) 3px, transparent 4px), radial-gradient(circle at 34px 28px, rgba(7,89,133,0.22) 0, rgba(7,89,133,0.22) 4px, transparent 5px), radial-gradient(circle at 50px 18px, rgba(125,211,252,0.24) 0, rgba(125,211,252,0.24) 3px, transparent 4px)",
                                                 backgroundSize: "64px 48px",
                                             }}
                                         />
@@ -440,13 +475,17 @@ export default function App() {
                                         {SKILL_LABELS[category]}
                                     </h3>
                                     <div className="flex flex-wrap gap-3">
-                                        {items.map(({name, color, logo, invertLogo, logoBg}) => (
+                                        {items.map(({name, color, logo, invertLogoThemes, logoBg}) => (
                                             <div
                                                 key={name}
                                                 className={`group flex items-center gap-2.5 px-4 py-2.5 rounded-xl border transition-all duration-200 cursor-default ${
-                                                    ["Python", "C++", "Java", "SQL"].includes(name)
-                                                        ? "bg-primary/12 border-primary/55 shadow-[0_0_18px_rgba(124,58,237,0.18)] hover:bg-primary/18 hover:border-primary/75"
-                                                        : "bg-card border-border hover:border-primary/40 hover:bg-primary/5"
+                                                    theme === "light"
+                                                        ? ["Python", "C++", "Java", "SQL"].includes(name)
+                                                            ? "bg-white border-accent/55 shadow-[0_10px_26px_rgba(217,119,6,0.10)] hover:bg-accent/10 hover:border-accent/70"
+                                                            : "bg-card border-border hover:bg-accent/10 hover:border-accent/55"
+                                                        : ["Python", "C++", "Java", "SQL"].includes(name)
+                                                            ? "bg-primary/12 border-primary/55 shadow-[0_0_18px_rgba(124,58,237,0.18)] hover:bg-primary/18 hover:border-primary/75"
+                                                            : "bg-card border-border hover:border-primary/40 hover:bg-primary/5"
                                                 }`}
                                             >
                                                 {logo ? (
@@ -461,7 +500,7 @@ export default function App() {
                                   aria-hidden="true"
                                   className="h-5 w-5 object-contain"
                                   draggable="false"
-                                  style={invertLogo ? {filter: "invert(1)"} : undefined}
+                                  style={invertLogoThemes?.includes(theme) ? {filter: "invert(1)"} : undefined}
                                   onError={(e) => {
                                       e.currentTarget.parentElement?.classList.add("hidden");
                                       e.currentTarget.parentElement?.nextElementSibling?.classList.remove("hidden");
@@ -480,7 +519,7 @@ export default function App() {
                                                     />
                                                 )}
                                                 <span
-                                                    className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
+                                                    className="text-sm font-medium text-foreground transition-colors">
                           {name}
                         </span>
                                             </div>
@@ -681,13 +720,18 @@ export default function App() {
                                         false, true, false,
                                     ];
                                     const isBlack = blackPattern[i % 12];
+
                                     return (
                                         <div
                                             key={i}
                                             className={
                                                 isBlack
-                                                    ? "h-4 flex-1 rounded-b bg-muted-foreground/30"
-                                                    : "h-6 flex-1 rounded-b bg-muted/60 border-x border-b border-border"
+                                                    ? theme === "light"
+                                                        ? "h-4 flex-1 rounded-b bg-neutral-300"
+                                                        : "h-4 flex-1 rounded-b bg-muted-foreground/30"
+                                                    : theme === "light"
+                                                        ? "h-6 flex-1 rounded-b bg-orange-50 border-x border-b border-orange-200"
+                                                        : "h-6 flex-1 rounded-b bg-muted/60 border-x border-b border-border"
                                             }
                                         />
                                     );
@@ -697,7 +741,12 @@ export default function App() {
                             {/* CTA footer */}
                             <div className="px-8 pb-8 pt-6">
                                 <div
-                                    className="rounded-2xl bg-gradient-to-r from-accent/10 to-primary/10 border border-accent/20 p-6 flex flex-wrap items-center justify-between gap-4">
+                                    className={`rounded-2xl border border-accent/20 p-6 flex flex-wrap items-center justify-between gap-4 ${
+                                        theme === "light"
+                                            ? "bg-gradient-to-r from-accent/10 to-card"
+                                            : "bg-gradient-to-r from-accent/10 to-primary/10"
+                                    }`}
+                                >
                                     <div>
                                         <div className="font-display font-semibold text-foreground">
                                             {CONTENT.music.ctaTitle}

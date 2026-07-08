@@ -10,6 +10,19 @@
       <meta name="description" content="Hi, I am Sum Yan Wan:)" />
       <meta name="robots" content="noindex, nofollow" />
       <style>html, body { height: 100%; margin: 0; } #root { height: 100%; }</style>
+      <script>
+        (function () {
+          try {
+            var storedTheme = window.localStorage.getItem("theme");
+            var theme = storedTheme === "light" || storedTheme === "dark" ? storedTheme : "dark";
+            document.documentElement.classList.add(theme);
+            document.documentElement.style.colorScheme = theme;
+          } catch (_) {
+            document.documentElement.classList.add("dark");
+            document.documentElement.style.colorScheme = "dark";
+          }
+        })();
+      </script>
       
     </head>
 

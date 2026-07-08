@@ -99,7 +99,7 @@ export const SKILLS = [
         category: "Backend & Databases",
         color: "#999999",
         logo: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/express.svg",
-        invertLogo: true
+        invertLogoThemes: ["dark"]
     },
     {name: "Firebase", category: "Backend & Databases", color: "#ffca28", logo: "https://cdn.simpleicons.org/firebase"},
     {
@@ -170,14 +170,14 @@ export const SKILLS = [
         category: "Game & Creative Tools",
         color: "#31a8ff",
         logo: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/adobephotoshop.svg",
-        invertLogo: true
+        invertLogoThemes: ["dark"]
     },
     {
         name: "Ableton Live",
         category: "Game & Creative Tools",
         color: "#06d6a0",
         logo: "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/abletonlive.svg",
-        invertLogo: true
+        invertLogoThemes: ["dark"]
     },
     {name: "GarageBand", category: "Game & Creative Tools", color: "#f97316"},
     {name: "MobileNetV4", category: "AI & ML", color: "#ff6f00"},
