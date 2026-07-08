@@ -1,4 +1,5 @@
-import {useState, useEffect, useRef} from "react";
+import {useState, useEffect, useLayoutEffect, useRef} from "react";
+import {flushSync} from "react-dom";
 import {
     Github,
     Linkedin,
@@ -23,6 +24,13 @@ import {Avatar, idleDucks} from "./components/Avatar";
 import {ThemeToggle} from "./components/ThemeToggle";
 import {WaveformViz} from "./components/WaveformViz";
 
+
+type ViewTransitionDocument = Document & {
+    startViewTransition?: (callback: () => void) => {
+        finished: Promise<void>;
+    };
+};
+
 const WEB3FORMS_ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY as string | undefined;
 // ── App ────────────────────────────────────────────────────────────────────
 export default function App() {
@@ -39,7 +47,7 @@ export default function App() {
     const [formError, setFormError] = useState("");
     const avatarTriggerRef = useRef<(() => void) | null>(null);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         applyThemePreference(theme);
 
         const favicon = document.querySelector<HTMLLinkElement>('link[rel="icon"]');
@@ -57,7 +65,7 @@ export default function App() {
                 1
             );
             const scrollY = Math.min(Math.max(window.scrollY, 0), maxScroll);
-            const transitionDistance = Math.max(viewportHeight * 4.8, 1);
+            const transitionDistance = Math.max(viewportHeight * 5.8, 1);
             const progress = Math.min(Math.max((scrollY - viewportHeight * 0.12) / transitionDistance, 0), 1);
             const easedProgress = progress * progress * (3 - 2 * progress);
             const oceanOffset = 50 - easedProgress * 59;
@@ -90,7 +98,27 @@ export default function App() {
 
     const themedIdleDuck = idleDucks[theme];
 
-    const toggleTheme = () => setTheme((current) => current === "dark" ? "light" : "dark");
+    const toggleTheme = () => {
+        const nextTheme = theme === "dark" ? "light" : "dark";
+        const startViewTransition = (document as ViewTransitionDocument).startViewTransition;
+        const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        if (!startViewTransition || prefersReducedMotion) {
+            setTheme(nextTheme);
+            return;
+        }
+
+        document.documentElement.classList.add("theme-wipe-active");
+        const transition = startViewTransition.call(document, () => {
+            flushSync(() => setTheme(nextTheme));
+        });
+
+        transition.finished.finally(() => {
+            document.documentElement.classList.remove("theme-wipe-active");
+        });
+    };
+
+
 
     const scrollTo = (id: Section) => {
         document.getElementById(id)?.scrollIntoView({behavior: "smooth"});

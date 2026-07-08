@@ -581,3 +581,58 @@
   background: var(--footer-bar-background);
 }
 
+
+.light .theme-toggle-button {
+  background: #0e0e1c;
+  border-color: rgba(139, 92, 246, 0.35);
+  color: #f0effb;
+}
+
+.light .theme-toggle-button:hover {
+  background: #1a1830;
+  border-color: rgba(167, 139, 250, 0.7);
+}
+
+.dark .theme-toggle-button {
+  background: #fffaf0;
+  border-color: rgba(180, 83, 9, 0.35);
+  color: #2f261c;
+}
+
+.dark .theme-toggle-button:hover {
+  background: #f3e4c8;
+  border-color: rgba(180, 83, 9, 0.6);
+}
+
+
+
+.theme-wipe-active *,
+.theme-wipe-active *::before,
+.theme-wipe-active *::after {
+  transition: none !important;
+}
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 720ms;
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+    mix-blend-mode: normal;
+  }
+
+  ::view-transition-old(root) {
+    animation-name: none;
+  }
+
+  ::view-transition-new(root) {
+    animation-name: themeDiagonalWipe;
+  }
+}
+
+@keyframes themeDiagonalWipe {
+  from {
+    clip-path: circle(0 at 0 0);
+  }
+  to {
+    clip-path: circle(150vmax at 0 0);
+  }
+}
