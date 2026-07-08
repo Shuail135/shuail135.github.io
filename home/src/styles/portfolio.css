@@ -307,12 +307,12 @@
 }
 
 .light .pixel-creature-accent {
-  --creature-pixel-size: calc(var(--avatar-size) * 0.019);
+  --creature-pixel-size: calc(var(--avatar-size) * 0.017);
   color: #fb923c;
 }
 
 .light .pixel-creature-primary {
-  --creature-pixel-size: calc(var(--avatar-size) * 0.0120);
+  --creature-pixel-size: calc(var(--avatar-size) * 0.0110);
   color: #f7748c;
 }
 
@@ -400,3 +400,184 @@
   height: 140%;
   background-image: url("../../img/swim_ring.png");
 }
+.dark .pixel-creature::after {
+  animation: jellyfishTentacles 1.15s steps(2, end) infinite;
+}
+
+.light .pixel-creature::before {
+  animation: crabFeet 1.2s steps(2, end) infinite;
+}
+
+.light .pixel-creature::after {
+  animation: crabFeetHighlights 1.2s steps(2, end) infinite;
+}
+
+@keyframes jellyfishTentacles {
+  0%, 100% {
+    box-shadow:
+      calc(var(--creature-pixel) * 2) var(--creature-pixel) currentColor,
+      calc(var(--creature-pixel) * 3) var(--creature-pixel) currentColor,
+      var(--creature-pixel) calc(var(--creature-pixel) * 4) currentColor,
+      calc(var(--creature-pixel) * 2) calc(var(--creature-pixel) * 5) currentColor,
+      calc(var(--creature-pixel) * 3) calc(var(--creature-pixel) * 4) currentColor,
+      calc(var(--creature-pixel) * 4) calc(var(--creature-pixel) * 5) currentColor;
+  }
+  50% {
+    box-shadow:
+      calc(var(--creature-pixel) * 2) var(--creature-pixel) currentColor,
+      calc(var(--creature-pixel) * 3) var(--creature-pixel) currentColor,
+      0 calc(var(--creature-pixel) * 4) currentColor,
+      var(--creature-pixel) calc(var(--creature-pixel) * 5) currentColor,
+      calc(var(--creature-pixel) * 3) calc(var(--creature-pixel) * 5) currentColor,
+      calc(var(--creature-pixel) * 4) calc(var(--creature-pixel) * 5) currentColor;
+  }
+}
+
+@keyframes crabFeet {
+  0%, 100% {
+    box-shadow:
+      var(--creature-pixel) 0 currentColor,
+      calc(var(--creature-pixel) * 7) 0 currentColor,
+      0 var(--creature-pixel) currentColor,
+      var(--creature-pixel) var(--creature-pixel) currentColor,
+      calc(var(--creature-pixel) * 3) var(--creature-pixel) currentColor,
+      calc(var(--creature-pixel) * 4) var(--creature-pixel) currentColor,
+      calc(var(--creature-pixel) * 5) var(--creature-pixel) currentColor,
+      calc(var(--creature-pixel) * 7) var(--creature-pixel) currentColor,
+      calc(var(--creature-pixel) * 8) var(--creature-pixel) currentColor,
+      var(--creature-pixel) calc(var(--creature-pixel) * 2) currentColor,
+      calc(var(--creature-pixel) * 2) calc(var(--creature-pixel) * 2) currentColor,
+      calc(var(--creature-pixel) * 3) calc(var(--creature-pixel) * 2) currentColor,
+      calc(var(--creature-pixel) * 4) calc(var(--creature-pixel) * 2) currentColor,
+      calc(var(--creature-pixel) * 5) calc(var(--creature-pixel) * 2) currentColor,
+      calc(var(--creature-pixel) * 6) calc(var(--creature-pixel) * 2) currentColor,
+      calc(var(--creature-pixel) * 7) calc(var(--creature-pixel) * 2) currentColor,
+      calc(var(--creature-pixel) * 2) calc(var(--creature-pixel) * 3) currentColor,
+      calc(var(--creature-pixel) * 3) calc(var(--creature-pixel) * 3) currentColor,
+      calc(var(--creature-pixel) * 4) calc(var(--creature-pixel) * 3) currentColor,
+      calc(var(--creature-pixel) * 5) calc(var(--creature-pixel) * 3) currentColor,
+      calc(var(--creature-pixel) * 6) calc(var(--creature-pixel) * 3) currentColor,
+      var(--creature-pixel) calc(var(--creature-pixel) * 4) currentColor,
+      calc(var(--creature-pixel) * 2) calc(var(--creature-pixel) * 4) currentColor,
+      calc(var(--creature-pixel) * 3) calc(var(--creature-pixel) * 4) currentColor,
+      calc(var(--creature-pixel) * 4) calc(var(--creature-pixel) * 4) currentColor,
+      calc(var(--creature-pixel) * 5) calc(var(--creature-pixel) * 4) currentColor,
+      calc(var(--creature-pixel) * 6) calc(var(--creature-pixel) * 4) currentColor,
+      calc(var(--creature-pixel) * 7) calc(var(--creature-pixel) * 4) currentColor,
+      0 calc(var(--creature-pixel) * 5) currentColor,
+      calc(var(--creature-pixel) * 2) calc(var(--creature-pixel) * 5) currentColor,
+      calc(var(--creature-pixel) * 6) calc(var(--creature-pixel) * 5) currentColor,
+      calc(var(--creature-pixel) * 8) calc(var(--creature-pixel) * 5) currentColor;
+  }
+  50% {
+    box-shadow:
+            0 0 currentColor,
+      calc(var(--creature-pixel) * 8) 0 currentColor,
+      var(--creature-pixel) var(--creature-pixel) currentColor,
+      calc(var(--creature-pixel) * 7) var(--creature-pixel) currentColor,
+      calc(var(--creature-pixel) * 3) var(--creature-pixel) currentColor,
+      calc(var(--creature-pixel) * 4) var(--creature-pixel) currentColor,
+      calc(var(--creature-pixel) * 5) var(--creature-pixel) currentColor,
+            0 var(--creature-pixel) currentColor,
+      calc(var(--creature-pixel) * 8) var(--creature-pixel) currentColor,
+      var(--creature-pixel) calc(var(--creature-pixel) * 2) currentColor,
+      calc(var(--creature-pixel) * 2) calc(var(--creature-pixel) * 2) currentColor,
+      calc(var(--creature-pixel) * 3) calc(var(--creature-pixel) * 2) currentColor,
+      calc(var(--creature-pixel) * 4) calc(var(--creature-pixel) * 2) currentColor,
+      calc(var(--creature-pixel) * 5) calc(var(--creature-pixel) * 2) currentColor,
+      calc(var(--creature-pixel) * 6) calc(var(--creature-pixel) * 2) currentColor,
+      calc(var(--creature-pixel) * 7) calc(var(--creature-pixel) * 2) currentColor,
+      calc(var(--creature-pixel) * 2) calc(var(--creature-pixel) * 3) currentColor,
+      calc(var(--creature-pixel) * 3) calc(var(--creature-pixel) * 3) currentColor,
+      calc(var(--creature-pixel) * 4) calc(var(--creature-pixel) * 3) currentColor,
+      calc(var(--creature-pixel) * 5) calc(var(--creature-pixel) * 3) currentColor,
+      calc(var(--creature-pixel) * 6) calc(var(--creature-pixel) * 3) currentColor,
+      var(--creature-pixel) calc(var(--creature-pixel) * 4) currentColor,
+      calc(var(--creature-pixel) * 2) calc(var(--creature-pixel) * 4) currentColor,
+      calc(var(--creature-pixel) * 3) calc(var(--creature-pixel) * 4) currentColor,
+      calc(var(--creature-pixel) * 4) calc(var(--creature-pixel) * 4) currentColor,
+      calc(var(--creature-pixel) * 5) calc(var(--creature-pixel) * 4) currentColor,
+      calc(var(--creature-pixel) * 6) calc(var(--creature-pixel) * 4) currentColor,
+      calc(var(--creature-pixel) * 7) calc(var(--creature-pixel) * 4) currentColor,
+      var(--creature-pixel) calc(var(--creature-pixel) * 5) currentColor,
+      calc(var(--creature-pixel) * 3) calc(var(--creature-pixel) * 5) currentColor,
+      calc(var(--creature-pixel) * 5) calc(var(--creature-pixel) * 5) currentColor,
+      calc(var(--creature-pixel) * 7) calc(var(--creature-pixel) * 5) currentColor;
+  }
+}
+
+@keyframes crabFeetHighlights {
+  0%, 100% {
+    box-shadow:
+      calc(var(--creature-pixel) * 3) 0 currentColor,
+      calc(var(--creature-pixel) * 5) 0 currentColor,
+      calc(var(--creature-pixel) * 3) calc(var(--creature-pixel) * 2) currentColor,
+      calc(var(--creature-pixel) * 5) calc(var(--creature-pixel) * 2) currentColor,
+      var(--creature-pixel) calc(var(--creature-pixel) * 5) currentColor,
+      calc(var(--creature-pixel) * 3) calc(var(--creature-pixel) * 6) currentColor,
+      calc(var(--creature-pixel) * 5) calc(var(--creature-pixel) * 6) currentColor,
+      calc(var(--creature-pixel) * 7) calc(var(--creature-pixel) * 5) currentColor;
+  }
+  50% {
+    box-shadow:
+      calc(var(--creature-pixel) * 3) 0 currentColor,
+      calc(var(--creature-pixel) * 5) 0 currentColor,
+      calc(var(--creature-pixel) * 3) calc(var(--creature-pixel) * 2) currentColor,
+      calc(var(--creature-pixel) * 5) calc(var(--creature-pixel) * 2) currentColor,
+      calc(var(--creature-pixel) * 2) calc(var(--creature-pixel) * 6) currentColor,
+      calc(var(--creature-pixel) * 4) calc(var(--creature-pixel) * 5) currentColor,
+      calc(var(--creature-pixel) * 6) calc(var(--creature-pixel) * 5) currentColor,
+      calc(var(--creature-pixel) * 8) calc(var(--creature-pixel) * 6) currentColor;
+  }
+}
+
+
+.pixel-creature-tentacle-right {
+  display: none;
+}
+
+.dark .pixel-creature-tentacle-right {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--creature-pixel);
+  height: var(--creature-pixel);
+  color: var(--creature-highlight);
+  background: transparent;
+  box-shadow:
+    calc(var(--creature-pixel) * 3) calc(var(--creature-pixel) * 4) currentColor,
+    calc(var(--creature-pixel) * 4) calc(var(--creature-pixel) * 5) currentColor;
+  animation: jellyfishRightTentacle 1.15s steps(2, end) infinite;
+}
+
+@keyframes jellyfishTentacles {
+  0%, 100% {
+    box-shadow:
+      calc(var(--creature-pixel) * 2) var(--creature-pixel) currentColor,
+      calc(var(--creature-pixel) * 3) var(--creature-pixel) currentColor,
+      var(--creature-pixel) calc(var(--creature-pixel) * 4) currentColor,
+      calc(var(--creature-pixel) * 2) calc(var(--creature-pixel) * 5) currentColor;
+  }
+  50% {
+    box-shadow:
+      calc(var(--creature-pixel) * 2) var(--creature-pixel) currentColor,
+      calc(var(--creature-pixel) * 3) var(--creature-pixel) currentColor,
+      0 calc(var(--creature-pixel) * 4) currentColor,
+      var(--creature-pixel) calc(var(--creature-pixel) * 5) currentColor;
+  }
+}
+
+@keyframes jellyfishRightTentacle {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(calc(var(--creature-pixel) * 0.45));
+  }
+}
+
+.footer-bottom-bar {
+  background: var(--footer-bar-background);
+}
+

@@ -19,7 +19,7 @@ import {NAV_ITEMS, PROJECTS, SKILL_CATEGORIES, SKILL_LABELS, SKILLS} from "./dat
 import {CONTENT} from "./content";
 import type {Section} from "./types";
 import {applyThemePreference, getStoredTheme, type ThemeMode} from "./theme";
-import {Avatar, idleDuck} from "./components/Avatar";
+import {Avatar, idleDucks} from "./components/Avatar";
 import {ThemeToggle} from "./components/ThemeToggle";
 import {WaveformViz} from "./components/WaveformViz";
 
@@ -41,18 +41,24 @@ export default function App() {
 
     useEffect(() => {
         applyThemePreference(theme);
+
+        const favicon = document.querySelector<HTMLLinkElement>('link[rel="icon"]');
+        if (favicon) favicon.href = idleDucks[theme];
     }, [theme]);
 
     useEffect(() => {
         let frameId = 0;
 
         const updateLightBackdrop = () => {
+            const scrollingElement = document.scrollingElement ?? document.documentElement;
+            const viewportHeight = window.visualViewport?.height ?? window.innerHeight;
             const maxScroll = Math.max(
-                document.documentElement.scrollHeight - window.innerHeight,
+                scrollingElement.scrollHeight - viewportHeight,
                 1
             );
-            const transitionDistance = Math.max(window.innerHeight * 2.8, 1);
-            const progress = Math.min(Math.max((window.scrollY - window.innerHeight * 0.12) / transitionDistance, 0), 1);
+            const scrollY = Math.min(Math.max(window.scrollY, 0), maxScroll);
+            const transitionDistance = Math.max(viewportHeight * 4.8, 1);
+            const progress = Math.min(Math.max((scrollY - viewportHeight * 0.12) / transitionDistance, 0), 1);
             const easedProgress = progress * progress * (3 - 2 * progress);
             const oceanOffset = 50 - easedProgress * 59;
             const oceanOpacity = 0.22 + easedProgress * 0.48;
@@ -72,13 +78,17 @@ export default function App() {
         updateLightBackdrop();
         window.addEventListener("scroll", scheduleUpdate, {passive: true});
         window.addEventListener("resize", scheduleUpdate);
+        window.visualViewport?.addEventListener("resize", scheduleUpdate);
 
         return () => {
             window.cancelAnimationFrame(frameId);
             window.removeEventListener("scroll", scheduleUpdate);
             window.removeEventListener("resize", scheduleUpdate);
+            window.visualViewport?.removeEventListener("resize", scheduleUpdate);
         };
     }, []);
+
+    const themedIdleDuck = idleDucks[theme];
 
     const toggleTheme = () => setTheme((current) => current === "dark" ? "light" : "dark");
 
@@ -168,7 +178,7 @@ export default function App() {
                         className="font-display font-bold text-lg tracking-tight text-foreground flex flex-shrink-0 items-center gap-2"
                     >
                         <img
-                            src={idleDuck}
+                            src={themedIdleDuck}
                             alt=""
                             aria-hidden="true"
                             draggable="false"
@@ -324,7 +334,7 @@ export default function App() {
                                     }}
                                 >
                                     <div
-                                        className="pixel-creature pixel-creature-accent absolute top-0 left-1/2 z-[60] -translate-x-1/2 -translate-y-1/2"/>
+                                        className="pixel-creature pixel-creature-accent absolute top-0 left-1/2 z-[60] -translate-x-1/2 -translate-y-1/2"><span className="pixel-creature-tentacle-right"/></div>
                                 </div>
                                 <div
                                     className="pointer-events-none absolute inset-[6.5%] z-0 rounded-full border avatar-orbit-ring-inner"
@@ -397,7 +407,7 @@ export default function App() {
                                     }}
                                 >
                                     <div
-                                        className="pixel-creature pixel-creature-primary absolute bottom-0 left-1/2 z-[90] -translate-x-1/2 translate-y-1/2"/>
+                                        className="pixel-creature pixel-creature-primary absolute bottom-0 left-1/2 z-[90] -translate-x-1/2 translate-y-1/2"><span className="pixel-creature-tentacle-right"/></div>
                                 </div>
                             </div>
                         </div>
@@ -481,7 +491,7 @@ export default function App() {
                                                 className={`group flex items-center gap-2.5 px-4 py-2.5 rounded-xl border transition-all duration-200 cursor-default ${
                                                     theme === "light"
                                                         ? ["Python", "C++", "Java", "SQL"].includes(name)
-                                                            ? "bg-white border-accent/55 shadow-[0_10px_26px_rgba(217,119,6,0.10)] hover:bg-accent/10 hover:border-accent/70"
+                                                            ? "bg-orange-100 border-accent/55 shadow-[0_10px_26px_rgba(217,119,6,0.10)] hover:bg-accent/10 hover:border-accent/70"
                                                             : "bg-card border-border hover:bg-accent/10 hover:border-accent/55"
                                                         : ["Python", "C++", "Java", "SQL"].includes(name)
                                                             ? "bg-primary/12 border-primary/55 shadow-[0_0_18px_rgba(124,58,237,0.18)] hover:bg-primary/18 hover:border-primary/75"
@@ -918,12 +928,12 @@ export default function App() {
                 </section>
 
                 {/* ── FOOTER ── */}
-                <footer className="border-t border-border py-8">
+                <footer className="footer-bottom-bar border-t border-border py-4">
                     <div
-                        className="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
+                        className="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-sm text-muted-foreground">
                         <div className="font-display font-semibold flex items-center gap-2">
                             <img
-                                src={idleDuck}
+                                src={themedIdleDuck}
                                 alt=""
                                 aria-hidden="true"
                                 draggable="false"

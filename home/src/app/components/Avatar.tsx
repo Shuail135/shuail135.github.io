@@ -17,7 +17,10 @@ import {
     type ThemeMode,
 } from "../theme";
 
-export const idleDuck = darkIdleDuck;
+export const idleDucks: Record<ThemeMode, string> = {
+    dark: darkIdleDuck,
+    light: lightIdleDuck,
+};
 
 const duckFrames: Record<
     ThemeMode,
@@ -28,12 +31,12 @@ const duckFrames: Record<
     }
 > = {
     dark: {
-        idle: darkIdleDuck,
+        idle: idleDucks.dark,
         clicked1: darkClickedDuck1,
         clicked2: darkClickedDuck2,
     },
     light: {
-        idle: lightIdleDuck,
+        idle: idleDucks.light,
         clicked1: lightClickedDuck1,
         clicked2: lightClickedDuck2,
     },

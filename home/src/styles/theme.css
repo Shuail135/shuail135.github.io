@@ -12,7 +12,7 @@
     --secondary: #1a1830;
     --secondary-foreground: #c4c3de;
     --muted: #1a1830;
-    --muted-foreground: #7070a0;
+    --muted-foreground: #8686b7;
     --accent: #06d6a0;
     --accent-foreground: #08080f;
     --destructive: #ef4444;
@@ -39,6 +39,7 @@
     --sidebar-border: rgba(124, 58, 237, 0.18);
     --sidebar-ring: #7c3aed;
     --backdrop-gradient: linear-gradient(180deg, #050712 0%, #090b1c 48%, #050712 100%);
+    --footer-bar-background: #05060d;
     --name-gradient: linear-gradient(135deg, #a855f7 0%, #6366f1 45%, #06d6a0 100%);
     --name-filter: drop-shadow(0 0 16px rgba(124, 58, 237, 0.34)) drop-shadow(0 0 30px rgba(125, 211, 252, 0.18));
     --name-accent-line: linear-gradient(90deg, rgba(168, 85, 247, 0), rgba(184, 166, 255, 0.92), rgba(125, 211, 252, 0.78), rgba(125, 211, 252, 0));
@@ -90,6 +91,7 @@
     --sidebar-accent-foreground: #2f261c;
     --sidebar-border: rgba(139, 98, 42, 0.22);
     --sidebar-ring: #0b7f94;
+    --footer-bar-background: rgba(236, 219, 191, 0.84);
     --name-gradient: linear-gradient(135deg, #e05e01 0%, #f8981b 48%, #ff8d1a 100%);
     --name-filter: drop-shadow(0 4px 10px rgba(11, 127, 148, 0.18));
     --name-accent-line: linear-gradient(90deg, rgba(217, 119, 6, 0), rgba(217, 119, 6, 0.42), rgba(229, 178, 54, 0.7), rgba(184, 172, 42, 0));
@@ -97,8 +99,8 @@
     --creature-accent: #fb923c;
     --creature-primary: #0b7f94;
     --creature-highlight: rgba(255, 247, 237, 0.9);
-    --avatar-orbit-outer: rgba(15, 23, 42, 0.16);
-    --avatar-orbit-inner: rgba(100, 116, 139, 0.18);
+    --avatar-orbit-outer: rgba(194, 115, 32, 0.34);
+    --avatar-orbit-inner: rgba(226, 159, 58, 0.30);
 }
 
 .dark {
@@ -113,7 +115,7 @@
     --secondary: #1a1830;
     --secondary-foreground: #c4c3de;
     --muted: #1a1830;
-    --muted-foreground: #7070a0;
+    --muted-foreground: #8686b7;
     --accent: #06d6a0;
     --accent-foreground: #08080f;
     --destructive: #ef4444;
@@ -137,6 +139,7 @@
     --sidebar-accent-foreground: #f0effb;
     --sidebar-border: rgba(124, 58, 237, 0.18);
     --sidebar-ring: #7c3aed;
+    --footer-bar-background: #05060d;
     --name-gradient: linear-gradient(135deg, #a855f7 0%, #6366f1 45%, #06d6a0 100%);
     --name-filter: drop-shadow(0 0 16px rgba(124, 58, 237, 0.34)) drop-shadow(0 0 30px rgba(125, 211, 252, 0.18));
     --name-accent-line: linear-gradient(90deg, rgba(168, 85, 247, 0), rgba(184, 166, 255, 0.92), rgba(125, 211, 252, 0.78), rgba(125, 211, 252, 0));
@@ -191,11 +194,18 @@
 
     body {
         @apply bg-background text-foreground;
+        overscroll-behavior-y: none;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    :focus:not(:focus-visible) {
+        outline: none;
     }
 
     /** * Default typography styles for HTML elements (h1-h4, p, label, button, input). * These are in @layer base, so Tailwind utility classes (like text-sm, text-lg) automatically override them. */
     html {
         font-size: var(--font-size);
+        overscroll-behavior-y: none;
     }
 
     h1 {
