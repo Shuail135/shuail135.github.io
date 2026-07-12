@@ -11,12 +11,8 @@
             "id": "b8ed99946d832210",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Music Score App.md",
-                "mode": "source",
-                "source": true
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -31,8 +27,8 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Music Score App.md",
-                "mode": "preview",
+                "file": "index.md",
+                "mode": "source",
                 "source": true
               }
             }
@@ -103,7 +99,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Music Score App.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -120,7 +115,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Music Score App.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -142,9 +136,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "Music Score App.md"
-              }
+              "state": {}
             }
           }
         ]
@@ -164,7 +156,7 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "dc1b9c19b13a93ce",
+  "active": "08638d08f5bd828a",
   "lastOpenFiles": [
     "Music Score App.md",
     "index.md"

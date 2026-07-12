@@ -719,11 +719,6 @@ class MusicScoreApp extends HTMLElement {
             for (const id of [...this.liveInputs.keys()].filter((id) => id.startsWith("key:"))) this.releaseInput(id)
         })
         this.themeMessageHandler = (event) => {
-            if (event.origin !== window.location.origin) {
-                console.warn("Ignoring Event:", event.origin);
-                return;
-            }
-
             if (event.data?.type === "music-score-theme" && ["light", "dark"].includes(event.data.theme)) {
                 this.setAttribute("theme", event.data.theme)
             }

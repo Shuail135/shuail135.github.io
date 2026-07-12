@@ -28,8 +28,8 @@
     ]) {
         if (params.has(name)) app.setAttribute(name, params.get(name))
     }
-    app.setAttribute("engine-url", "/music-score-app/music_engine.wasm")
-    await import("/music-score-app/music-score-app.js")
+    app.setAttribute("engine-url", "./music_engine.wasm")
+    await import("./music-score-app.js")
 </script>
 </body>
 </html>

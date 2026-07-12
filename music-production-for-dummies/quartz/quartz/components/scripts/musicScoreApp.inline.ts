@@ -51,18 +51,11 @@ function currentMusicScoreTheme(): "light" | "dark" {
 }
 
 function musicScoreAssetUrl(config: MusicConfiguration): string {
-    // This detects the base path automatically for local and GitHub Pages
-    const basePath = document.baseURI ? new URL(document.baseURI).pathname : '/';
-    const cleanBase = basePath.endsWith('/') ? basePath.slice(0, -1) : basePath;
-
-    // Construct a URL relative to the current site base
-    const url = new URL(`${cleanBase}/static/music-score-app/index.html`, window.location.origin)
-
-    // Append all our configuration parameters to the URL
-    for (const [name, value] of Object.entries(config)) {
-        url.searchParams.set(name, String(value))
-    }
-
+    const icon = document.querySelector<HTMLLinkElement>('link[rel="icon"]')?.href
+    const url = icon
+        ? new URL("music-score-app/index.html", icon)
+        : new URL("/static/music-score-app/index.html", location.origin)
+    for (const [name, value] of Object.entries(config)) url.searchParams.set(name, String(value))
     url.searchParams.set("theme", currentMusicScoreTheme())
     return url.href
 }
@@ -74,11 +67,9 @@ function buildMusicScoreFrame(source: string): HTMLElement {
 
     const frame = document.createElement("iframe")
     frame.className = "music-score-frame"
-    frame.title = "Interactive music score"
-    // Add these security and interaction attributes to keep the frame "alive"
-    frame.setAttribute("allow", "autoplay; fullscreen; camera; microphone")
-    frame.setAttribute("sandbox", "allow-scripts allow-same-origin allow-forms")
-
+    frame.title = "Interactive music score and piano"
+    frame.loading = "lazy"
+    frame.allow = "autoplay"
     frame.src = musicScoreAssetUrl(config)
     wrapper.append(frame)
     return wrapper
@@ -96,14 +87,13 @@ function setupMusicScoreApps() {
         callout.dataset.musicScoreMounted = "true"
     }
 
-    for (const container of document.querySelectorAll<HTMLElement>('.music-score-container')) {
-        if (container.dataset.musicScoreMounted === "true") continue
-
-        const sourceEl = container.querySelector(".music-score-source")
-        const source = sourceEl?.textContent || ""
-
-        container.replaceChildren(buildMusicScoreFrame(source))
-        container.dataset.musicScoreMounted = "true"
+    for (const code of document.querySelectorAll<HTMLElement>(
+        'pre > code.language-music-score, pre > code[data-language="music-score"]',
+    )) {
+        const pre = code.parentElement
+        if (!pre || pre.dataset.musicScoreMounted === "true") continue
+        pre.dataset.musicScoreMounted = "true"
+        pre.replaceWith(buildMusicScoreFrame(code.textContent || ""))
     }
 }
 

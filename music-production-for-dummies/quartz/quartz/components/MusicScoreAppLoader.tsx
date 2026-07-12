@@ -15,7 +15,6 @@ export default (() => {
       margin: 0.75rem 0;
       overflow: hidden;
       border-radius: 16px;
-	  min-height: 760px
     }
 
     .music-score-frame {
