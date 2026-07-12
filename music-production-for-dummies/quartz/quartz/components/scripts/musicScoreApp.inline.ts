@@ -51,13 +51,14 @@ function currentMusicScoreTheme(): "light" | "dark" {
 }
 
 function musicScoreAssetUrl(config: MusicConfiguration): string {
-    const icon = document.querySelector<HTMLLinkElement>('link[rel="icon"]')?.href
-    const url = icon
-        ? new URL("music-score-app/index.html", icon)
-        : new URL("/static/music-score-app/index.html", location.origin)
-    for (const [name, value] of Object.entries(config)) url.searchParams.set(name, String(value))
-    url.searchParams.set("theme", currentMusicScoreTheme())
-    return url.href
+    // const baseUrl = window.location.origin + "/music-production-for-dummies";
+    const url = new URL("../../../static/music-score-app/index.html", window.location.origin);
+
+    for (const [name, value] of Object.entries(config)) {
+        url.searchParams.set(name, String(value));
+    }
+    url.searchParams.set("theme", currentMusicScoreTheme());
+    return url.href;
 }
 
 function buildMusicScoreFrame(source: string): HTMLElement {
@@ -76,33 +77,62 @@ function buildMusicScoreFrame(source: string): HTMLElement {
 }
 
 function setupMusicScoreApps() {
-    for (const callout of document.querySelectorAll<HTMLElement>(
-        '.callout[data-callout="music-score"]',
-    )) {
-        if (callout.dataset.musicScoreMounted === "true") continue
-        const content = callout.querySelector<HTMLElement>(".callout-content")
-        if (!content) continue
-        const source = content.innerText
-        content.replaceChildren(buildMusicScoreFrame(source))
-        callout.dataset.musicScoreMounted = "true"
-    }
+    const allPres = document.querySelectorAll('pre');
 
-    for (const code of document.querySelectorAll<HTMLElement>(
-        'pre > code.language-music-score, pre > code[data-language="music-score"]',
-    )) {
-        const pre = code.parentElement
-        if (!pre || pre.dataset.musicScoreMounted === "true") continue
-        pre.dataset.musicScoreMounted = "true"
-        pre.replaceWith(buildMusicScoreFrame(code.textContent || ""))
-    }
+    allPres.forEach(pre => {
+        if (pre.dataset.musicScoreMounted === "true") return;
+
+        const content = pre.innerText;
+
+        if (content.includes("preset:") && content.includes("notes:")) {
+            console.log("MusicScore: Found match in pre tag, mounting...");
+
+            pre.dataset.musicScoreMounted = "true";
+            const wrapper = buildMusicScoreFrame(content);
+            pre.replaceWith(wrapper);
+        }
+    });
+
+    document.querySelectorAll('.callout[data-callout="music-score"]').forEach(callout => {
+        if ((callout as HTMLElement).dataset.musicScoreMounted === "true") return;
+        const content = callout.querySelector(".callout-content");
+        if (content) {
+            content.replaceChildren(buildMusicScoreFrame((content as HTMLElement).innerText));
+            (callout as HTMLElement).dataset.musicScoreMounted = "true";
+        }
+    });
 }
 
-setupMusicScoreApps()
-document.addEventListener("nav", setupMusicScoreApps)
-document.addEventListener("render", setupMusicScoreApps)
+const runSetup = () => {
+    console.log("MusicScore: Running setup...");
+    setupMusicScoreApps();
+};
+
+if (document.readyState === 'loading') {
+    document.addEventListener("DOMContentLoaded", runSetup);
+} else {
+    runSetup();
+}
+
+document.addEventListener("nav", () => setTimeout(runSetup, 100));
+document.addEventListener("render", runSetup);
+
 document.addEventListener("themechange", (event) => {
-    const theme = event.detail.theme
-    for (const frame of document.querySelectorAll<HTMLIFrameElement>(".music-score-frame")) {
-        frame.contentWindow?.postMessage({type: "music-score-theme", theme}, location.origin)
+    const theme = (event as any).detail?.theme;
+    document.querySelectorAll<HTMLIFrameElement>(".music-score-frame").forEach((frame) => {
+        if (frame.contentWindow) {
+            frame.contentWindow.postMessage({ type: "music-score-theme", theme }, "*");
+        }
+    });
+});
+
+window.addEventListener("message", (event) => {
+    if (event.data?.type === "resize") {
+        const frames = document.querySelectorAll<HTMLIFrameElement>(".music-score-frame");
+        frames.forEach(frame => {
+            if (frame.contentWindow === event.source) {
+                frame.style.height = event.data.height + "px";
+            }
+        });
     }
-})
+});

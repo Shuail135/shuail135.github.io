@@ -14,6 +14,7 @@
 
         body {
             padding: 6px;
+            box-sizing: border-box;
         }
     </style>
 </head>
@@ -30,6 +31,20 @@
     }
     app.setAttribute("engine-url", "./music_engine.wasm")
     await import("./music-score-app.js")
+
+    function sendHeight() {
+        const height = document.body.scrollHeight;
+        window.parent.postMessage({ type: "resize", height: height }, "*");
+    }
+
+    window.addEventListener("load", sendHeight);
+
+    const observer = new MutationObserver(sendHeight);
+    observer.observe(app, {
+        attributes: true,
+        childList: true,
+        subtree: true
+    });
 </script>
 </body>
 </html>

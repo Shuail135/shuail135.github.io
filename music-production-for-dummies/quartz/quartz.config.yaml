@@ -7,14 +7,15 @@ configuration:
   analytics:
     provider: plausible
   locale: en-US
-  baseUrl: shuail135.github.io/portfolio-website/music-production-for-dummies/
+  baseUrl: shuail135.github.io/music-production-for-dummies
   ignorePatterns:
     - private
     - templates
     - .obsidian
   theme:
-    fontOrigin: googleFonts
-    cdnCaching: true
+    cdnPerfs: true
+    fontOrigin: local
+    cdnCaching: false
     typography:
       header: Schibsted Grotesk
       body: Source Sans Pro
