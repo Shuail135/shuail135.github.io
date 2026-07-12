@@ -51,8 +51,12 @@ function currentMusicScoreTheme(): "light" | "dark" {
 }
 
 function musicScoreAssetUrl(config: MusicConfiguration): string {
-    // Directly point to the static folder where we just moved the WebAssembly app
-    const url = new URL("static/music-score-app/index.html", window.location.origin)
+    // This detects the base path automatically for local and GitHub Pages
+    const basePath = document.baseURI ? new URL(document.baseURI).pathname : '/';
+    const cleanBase = basePath.endsWith('/') ? basePath.slice(0, -1) : basePath;
+
+    // Construct a URL relative to the current site base
+    const url = new URL(`${cleanBase}/static/music-score-app/index.html`, window.location.origin)
 
     // Append all our configuration parameters to the URL
     for (const [name, value] of Object.entries(config)) {
