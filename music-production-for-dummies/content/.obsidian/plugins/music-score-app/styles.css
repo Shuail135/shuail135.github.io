@@ -1,0 +1,8 @@
+.music-score-app-obsidian {
+  width: 100%;
+  margin: 0.75rem 0;
+}
+
+.callout[data-callout="music-score"] .callout-content {
+  overflow: visible;
+}

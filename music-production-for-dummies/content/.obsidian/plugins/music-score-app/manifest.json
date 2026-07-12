@@ -1,0 +1,9 @@
+{
+  "id": "music-score-app",
+  "name": "Music Score App",
+  "version": "0.3.0",
+  "minAppVersion": "1.5.0",
+  "description": "Interactive piano, staff note entry, recording, quantization, and playback.",
+  "author": "Sum Yan Wan",
+  "isDesktopOnly": false
+}

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <title>Music Score App</title>
+    <style>
+        html, body {
+            margin: 0;
+            min-height: 100%;
+            background: transparent;
+        }
+
+        body {
+            padding: 6px;
+        }
+    </style>
+</head>
+<body>
+<music-score-app id="music-app"></music-score-app>
+<script type="module">
+    const params = new URLSearchParams(location.search)
+    const app = document.querySelector("#music-app")
+    for (const name of [
+        "preset", "mode", "bpm", "quantize", "octave", "key", "scale",
+        "clef", "time-signature", "notes", "theme",
+    ]) {
+        if (params.has(name)) app.setAttribute(name, params.get(name))
+    }
+    app.setAttribute("engine-url", "/music-score-app/music_engine.wasm")
+    await import("/music-score-app/music-score-app.js")
+</script>
+</body>
+</html>

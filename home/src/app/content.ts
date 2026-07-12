@@ -56,9 +56,6 @@ export const CONTENT = {
             "music and 3D visuals to games and ideas that randomly catch my attention. " +
             "I like having a mix of technical and creative interests because they " +
             "often connect in unexpected ways. ",
-            "I'm naturally curious, quick to pick up new things, and comfortable adapting when something does not go " +
-            "as planned. I like solving problems, learning from mistakes, and improving through the process rather than " +
-            "waiting until everything is perfect.",
             "Also, I have a soft spot for rubber ducks. You might notice one or two surprises around the site, especially " +
             "if you click on my avatar or switch between dark and light mode :)"
         ],
@@ -123,11 +120,15 @@ export const CONTENT = {
             first: "Music Production",
             accent: "for Dummies",
         },
-        description: "temp",
+        description: "Tools and quick theory to produce music fast",
         cardTitle: "Music Production for Dummies",
         cardSubtitle: "in prepare",
         features: [
-            {title: "title 1", desc: "temp"},
+            {title: "Music Sheet/Keyboard to MIDI",
+                desc: "An interactive digital piano and sheet music editor that lets you easily write music by either " +
+                    "clicking directly on the musical staff or playing the on-screen keyboard. Allows you to record your" +
+                    "melodies with an option to quantize your timing before downloading the final piece as a standard " +
+                    "MIDI file. "},
             {title: "title2", desc: "temp"},
             {title: "title3", desc: "temp"},
         ],
