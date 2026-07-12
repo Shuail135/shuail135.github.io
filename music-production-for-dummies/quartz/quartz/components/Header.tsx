@@ -1,13 +1,11 @@
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
-// @ts-ignore
-import script from "./scripts/musicScoreApp.inline" 
+// @ts-ignore - Quartz bundles .inline.ts files as raw browser scripts.
+import script from "./scripts/musicScoreApp.inline"
 
 const Header: QuartzComponent = ({ children }: QuartzComponentProps) => {
   return (
     <>
-      {/* This renders the script into the page */}
       <script dangerouslySetInnerHTML={{ __html: script }} />
-      
       {children.length > 0 ? <header>{children}</header> : null}
     </>
   )

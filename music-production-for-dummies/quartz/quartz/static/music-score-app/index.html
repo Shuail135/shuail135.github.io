@@ -1,12 +1,13 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="color-scheme" content="light dark">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"/>
     <title>Music Score App</title>
     <style>
-        html, body {
+        html,
+        body {
             margin: 0;
             min-height: 100%;
             background: transparent;
@@ -20,31 +21,6 @@
 </head>
 <body>
 <music-score-app id="music-app"></music-score-app>
-<script type="module">
-    const params = new URLSearchParams(location.search)
-    const app = document.querySelector("#music-app")
-    for (const name of [
-        "preset", "mode", "bpm", "quantize", "octave", "key", "scale",
-        "clef", "time-signature", "notes", "theme",
-    ]) {
-        if (params.has(name)) app.setAttribute(name, params.get(name))
-    }
-    app.setAttribute("engine-url", "./music_engine.wasm")
-    await import("./music-score-app.js")
-
-    function sendHeight() {
-        const height = document.body.scrollHeight;
-        window.parent.postMessage({ type: "resize", height: height }, "*");
-    }
-
-    window.addEventListener("load", sendHeight);
-
-    const observer = new MutationObserver(sendHeight);
-    observer.observe(app, {
-        attributes: true,
-        childList: true,
-        subtree: true
-    });
-</script>
+<script type="module" src="./bootstrap.js"></script>
 </body>
 </html>

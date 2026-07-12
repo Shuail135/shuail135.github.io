@@ -1,4 +1,5 @@
 import { QuartzComponent, QuartzComponentConstructor } from "./types"
+// @ts-ignore - Quartz bundles .inline.ts files as raw browser scripts.
 import script from "./scripts/musicScoreApp.inline"
 
 export default (() => {
@@ -14,24 +15,26 @@ export default (() => {
       width: 100%;
       margin: 0.75rem 0;
       overflow: hidden;
-      border-radius: 16px;
     }
 
     .music-score-frame {
       display: block;
       width: 100%;
-      height: 760px;
+      height: 1px;
       border: 0;
       background: transparent;
+    }
+
+    .music-score-frame:focus,
+    .music-score-frame:focus-visible {
+      outline: none;
+      box-shadow: none;
     }
 
     .callout[data-callout="music-score"] .callout-content {
       overflow: visible;
     }
 
-    @media (max-width: 620px) {
-      .music-score-frame { height: 860px; }
-    }
   `
 
   return MusicScoreAppLoader
