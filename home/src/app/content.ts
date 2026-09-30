@@ -13,8 +13,8 @@ export const CONTENT = {
         {id: "home", label: "Home"},
         {id: "about", label: "About"},
         {id: "skills", label: "Skills"},
+        {id: "camitune", label: "CamiTune"},
         {id: "projects", label: "Projects"},
-        {id: "music", label: "Music Production for Dummies"},
         {id: "contact", label: "Contact Me"},
     ] satisfies { id: Section; label: string }[],
 
@@ -89,11 +89,6 @@ export const CONTENT = {
                 tech: ["Python", "Computer Vision", "Embedded AI", "Linux", "Hardware Integration"],
                 github: "https://github.com/Shuail135/ECOllector",
                 demo: "https://ecollector-rouge.vercel.app/"},
-            {title: "CamiTune",
-                description: "A native macOS app for system-wide parametric EQ with frequency, gain, and Q controls. Powered by CamillaDSP.",
-                tech: ["Swift", "C", "Shell", "Audio Processing"],
-                github: "https://github.com/Shuail135/CamiTune",
-                demo: "https://github.com/Shuail135/CamiTune/blob/main/README.md"},
             {title: "Assistant",
                 description: "A customizable CPU-only voice assistant that runs locally, switching between command " +
                     "handling and LLM-based conversation depending on the user's input. ",
@@ -117,32 +112,18 @@ export const CONTENT = {
         ],
     },
 
-    // Music project section copy and feature cards.
-    music: {
+    // Dedicated featured app. Update the version badge when publishing a release.
+    camitune: {
         eyebrow: "Featured Project",
-        heading: {
-            first: "Music Production",
-            accent: "for Dummies",
-        },
-        description: "Tools and quick theory to produce music fast",
-        cardTitle: "Music Production for Dummies",
-        cardSubtitle: "in prepare",
-        features: [
-            {title: "CamiTune",
-                href: "https://github.com/Shuail135/CamiTune",
-                desc: "A native macOS app for system-wide parametric EQ with frequency, gain, and Q controls."},
-            {title: "Music Sheet/Keyboard to MIDI",
-                href: "https://shuail135.github.io/music-production-for-dummies/music-score-app",
-                desc: "An interactive digital piano and sheet music editor that lets you easily write music by either " +
-                    "clicking directly on the musical staff or playing the on-screen keyboard. Allows you to record your" +
-                    "melodies with an option to quantize your timing before downloading the final piece as a standard " +
-                    "MIDI file. "},
-            {title: "title3", href: "#", desc: "temp"},
-        ],
-        ctaTitle: "Ready to start making music?",
-        ctaDescription: "Not done yet.",
-        ctaLabel: "Visit the Site",
-        ctaHref: "https://shuail135.github.io/music-production-for-dummies/",
+        name: "CamiTune",
+        subtitle: "System-wide audio processing for macOS",
+        description: "CamiTune applies EQ and audio processing to your Mac’s output using CamillaDSP. It includes per-app volume, mute and EQ, separate output profiles, and correction for headphones, IEMs and speakers.",
+        githubHref: "https://github.com/Shuail135/CamiTune",
+        version: "v0.3.0",
+        downloadHref: "https://github.com/Shuail135/CamiTune/releases",
+        downloadLabel: "Download for macOS",
+        requirements: "macOS 13 or above",
+
     },
 
     // Contact section text, visible contact links, and form labels/placeholders.

@@ -1,0 +1,29 @@
+.camitune-section {
+  background: radial-gradient(ellipse at 50% 25%, color-mix(in srgb, var(--primary) 7%, transparent), transparent 60%);
+}
+
+.camitune-preview {
+  box-shadow: 0 20px 64px -28px color-mix(in srgb, var(--primary) 30%, transparent);
+}
+
+.camitune-screenshot-image {
+  background: color-mix(in srgb, var(--muted) 55%, var(--card));
+}
+
+.camitune-feature-nav {
+  scrollbar-width: none;
+}
+
+.camitune-feature-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.camitune-feature-indicator {
+  transition: transform 220ms ease, width 220ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .camitune-feature-indicator {
+    transition: none;
+  }
+}

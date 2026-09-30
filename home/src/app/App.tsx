@@ -9,7 +9,7 @@ import {useLightBackdrop} from "./hooks/useLightBackdrop";
 import {useThemeController} from "./hooks/useThemeController";
 import {AboutSection, HeroSection} from "./sections/HeroSection";
 import {ContactSection} from "./sections/ContactSection";
-import {MusicSection} from "./sections/MusicSection";
+import {CamiTuneSection} from "./sections/CamiTuneSection";
 import {ProjectsSection} from "./sections/ProjectsSection";
 import {SkillsSection} from "./sections/SkillsSection";
 import type {Section} from "./types";
@@ -49,8 +49,8 @@ export default function App() {
                 <HeroSection theme={theme} avatarTriggerRef={avatarTriggerRef} onScrollTo={scrollTo}/>
                 <AboutSection onScrollTo={scrollTo}/>
                 <SkillsSection theme={theme}/>
+                <CamiTuneSection/>
                 <ProjectsSection/>
-                <MusicSection theme={theme}/>
                 <ContactSection
                     formData={contactForm.formData}
                     setFormData={contactForm.setFormData}

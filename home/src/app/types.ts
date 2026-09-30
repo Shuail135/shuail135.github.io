@@ -1,1 +1,1 @@
-export type Section = "home" | "about" | "skills" | "projects" | "music" | "contact";
+export type Section = "home" | "about" | "skills" | "camitune" | "projects" | "contact";

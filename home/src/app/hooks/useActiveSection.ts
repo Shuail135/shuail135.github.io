@@ -6,8 +6,8 @@ const OBSERVED_SECTIONS: Section[] = [
     "home",
     "about",
     "skills",
+    "camitune",
     "projects",
-    "music",
     "contact",
 ];
 
