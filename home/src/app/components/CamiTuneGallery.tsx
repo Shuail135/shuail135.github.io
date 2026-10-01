@@ -1,4 +1,4 @@
-import {useEffect, useLayoutEffect, useRef, useState} from "react";
+import {memo, useEffect, useLayoutEffect, useRef, useState} from "react";
 import {ChevronLeft, ChevronRight, SlidersHorizontal} from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
 
@@ -65,7 +65,7 @@ const GROUPS: ScreenshotGroup[] = [
 
 const focusRing = "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary";
 
-function ScreenshotFigure({screenshot, active}: {screenshot: Screenshot; active: boolean}) {
+const ScreenshotFigure = memo(function ScreenshotFigure({screenshot, active}: {screenshot: Screenshot; active: boolean}) {
     return (
         <figure className="camitune-screenshot min-w-0 overflow-hidden rounded-xl border border-border bg-card">
             <Dialog>
@@ -89,7 +89,7 @@ function ScreenshotFigure({screenshot, active}: {screenshot: Screenshot; active:
             </figcaption>
         </figure>
     );
-}
+});
 
 const SLIDES = GROUPS.flatMap((group) => group.screenshots.map((screenshot) => ({group, screenshot})));
 

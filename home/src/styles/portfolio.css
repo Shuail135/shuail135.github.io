@@ -78,7 +78,7 @@
 }
 
 .light .space-backdrop::before {
-  background-image: url("../../img/sand_texture.png");
+  background-image: url("../../img/sand_texture.webp");
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
@@ -918,6 +918,15 @@
   z-index: 2;
   transform-origin: center;
   will-change: transform;
+}
+
+[data-animations-paused="true"],
+[data-animations-paused="true"] *,
+[data-animations-paused="true"]::before,
+[data-animations-paused="true"]::after,
+[data-animations-paused="true"] *::before,
+[data-animations-paused="true"] *::after {
+  animation-play-state: paused !important;
 }
 
 .skills-path-duck {

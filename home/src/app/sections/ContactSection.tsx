@@ -1,33 +1,11 @@
-import type {Dispatch, FormEvent, SetStateAction} from "react";
 import {Github, Linkedin, Mail, Send} from "lucide-react";
 
 import {CONTENT} from "../content";
+import {useContactForm} from "../hooks/useContactForm";
 
-type ContactFormData = {
-    name: string;
-    email: string;
-    message: string;
-};
-
-type ContactSectionProps = {
-    formData: ContactFormData;
-    setFormData: Dispatch<SetStateAction<ContactFormData>>;
-    formSent: boolean;
-    formSubmitting: boolean;
-    formError: string;
-    onSubmit: (event: FormEvent) => void;
-    onReset: () => void;
-};
-
-export function ContactSection({
-                                   formData,
-                                   setFormData,
-                                   formSent,
-                                   formSubmitting,
-                                   formError,
-                                   onSubmit,
-                                   onReset,
-                               }: ContactSectionProps) {
+export function ContactSection() {
+    const {formData, setFormData, formSent, formSubmitting, formError,
+        handleSubmit: onSubmit, resetForm: onReset} = useContactForm();
     return (
         <section id="contact" className="py-32 border-t border-border">
             <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-start">

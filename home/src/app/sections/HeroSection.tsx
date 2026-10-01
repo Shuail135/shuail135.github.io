@@ -13,7 +13,7 @@ type HeroSectionProps = {
 
 export function HeroSection({theme, avatarTriggerRef, onScrollTo}: HeroSectionProps) {
     return (
-        <section id="home" className="relative min-h-screen flex items-center overflow-hidden">
+        <section id="home" data-animation-region className="relative min-h-screen flex items-center overflow-hidden">
             <div className="absolute inset-0 pointer-events-none select-none">
                 {theme === "dark" && (
                     <>

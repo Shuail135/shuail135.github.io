@@ -30,6 +30,7 @@ export function SkillsSection({theme}: { theme: ThemeMode }) {
         }
 
         const setRowDelays = () => {
+            const delays: [HTMLElement, string][] = [];
             groups.forEach((group) => {
                 const items = group.querySelectorAll<HTMLElement>(".skill-reveal-item");
                 let rowTop: number | null = null;
@@ -37,19 +38,22 @@ export function SkillsSection({theme}: { theme: ThemeMode }) {
 
                 items.forEach((item) => {
                     if (item.classList.contains("skill-reveal-title")) {
-                        item.style.setProperty("--skill-reveal-delay", "0ms");
+                        delays.push([item, "0ms"]);
                         return;
                     }
 
-                    if (rowTop === null || Math.abs(item.offsetTop - rowTop) > 4) {
-                        rowTop = item.offsetTop;
+                    const top = item.offsetTop;
+                    if (rowTop === null || Math.abs(top - rowTop) > 4) {
+                        rowTop = top;
                         rowOrder = 0;
                     }
 
-                    item.style.setProperty("--skill-reveal-delay", `${(rowOrder + 1) * 100}ms`);
+                    delays.push([item, `${(rowOrder + 1) * 100}ms`]);
                     rowOrder += 1;
                 });
             });
+            // Read every row position before changing styles to avoid forced layouts.
+            delays.forEach(([item, delay]) => item.style.setProperty("--skill-reveal-delay", delay));
         };
 
         setRowDelays();
@@ -94,6 +98,20 @@ export function SkillsSection({theme}: { theme: ThemeMode }) {
         let lastFrameTime = 0;
         let cappedSince: number | null = null;
         let lagDirection = 0;
+        const pathLength = path.getTotalLength();
+        let trailHeight = 1;
+        let xScale = 0;
+        let yScale = 0;
+        let geometryDirty = true;
+        let targetDirty = true;
+
+        const measureGeometry = () => {
+            const svgRect = svg.getBoundingClientRect();
+            trailHeight = Math.max(trail.getBoundingClientRect().height, 1);
+            xScale = svgRect.width / 120;
+            yScale = svgRect.height / 1000;
+            geometryDirty = false;
+        };
 
         const getTargetProgress = () => {
             const trailRect = trail.getBoundingClientRect();
@@ -106,24 +124,21 @@ export function SkillsSection({theme}: { theme: ThemeMode }) {
         };
 
         const renderDuckPosition = (progress: number, travelDirection = 1) => {
-            const svgRect = svg.getBoundingClientRect();
-            if (!svgRect.width || !svgRect.height) return;
+            if (!xScale || !yScale) return;
 
-            const pathLength = path.getTotalLength();
             const distance = pathLength * progress;
             const point = path.getPointAtLength(distance);
             const previousPoint = path.getPointAtLength(Math.max(0, distance - 1));
             const nextPoint = path.getPointAtLength(Math.min(pathLength, distance + 1));
-            const xScale = svgRect.width / 120;
-            const yScale = svgRect.height / 1000;
             const renderedDx = (nextPoint.x - previousPoint.x) * xScale;
             const renderedDy = (nextPoint.y - previousPoint.y) * yScale;
             const x = point.x * xScale;
             const y = point.y * yScale;
             const movementDx = renderedDx * travelDirection;
 
-            if (Math.abs(movementDx) > 0.08) {
-                facing = movementDx < 0 ? -1 : 1;
+            const nextFacing = movementDx < 0 ? -1 : 1;
+            if (Math.abs(movementDx) > 0.08 && facing !== nextFacing) {
+                facing = nextFacing;
                 duckImage.style.setProperty("--skills-duck-facing", String(facing));
             }
 
@@ -142,7 +157,16 @@ export function SkillsSection({theme}: { theme: ThemeMode }) {
 
         const animateTowardsTarget = (time: number) => {
             animationFrame = 0;
-            const trailHeight = Math.max(trail.getBoundingClientRect().height, 1);
+            if (geometryDirty) measureGeometry();
+            if (targetDirty) {
+                targetProgress = getTargetProgress();
+                targetDirty = false;
+            }
+            if (reduceMotion) {
+                currentProgress = targetProgress;
+                renderDuckPosition(currentProgress);
+                return;
+            }
             const delta = targetProgress - currentProgress;
 
             if (Math.abs(delta) <= settleThreshold) {
@@ -181,38 +205,38 @@ export function SkillsSection({theme}: { theme: ThemeMode }) {
         };
 
         const updateTarget = () => {
-            targetProgress = getTargetProgress();
-
-            if (reduceMotion) {
-                currentProgress = targetProgress;
-                renderDuckPosition(currentProgress);
-                return;
-            }
-
+            targetDirty = true;
             window.clearTimeout(walkingTimer);
             if (!animationFrame) animationFrame = window.requestAnimationFrame(animateTowardsTarget);
         };
 
+        const updateGeometry = () => {
+            geometryDirty = true;
+            updateTarget();
+        };
+
+        measureGeometry();
         targetProgress = getTargetProgress();
         currentProgress = targetProgress;
         renderDuckPosition(currentProgress);
         window.addEventListener("scroll", updateTarget, {passive: true});
-        window.addEventListener("resize", updateTarget);
+        window.addEventListener("resize", updateGeometry);
 
-        const resizeObserver = new ResizeObserver(updateTarget);
+        const resizeObserver = new ResizeObserver(updateGeometry);
         resizeObserver.observe(trail);
+        resizeObserver.observe(svg);
 
         return () => {
             window.cancelAnimationFrame(animationFrame);
             window.clearTimeout(walkingTimer);
             window.removeEventListener("scroll", updateTarget);
-            window.removeEventListener("resize", updateTarget);
+            window.removeEventListener("resize", updateGeometry);
             resizeObserver.disconnect();
         };
     }, []);
 
     return (
-        <section ref={sectionRef} id="skills" className="py-32 border-t border-border">
+        <section ref={sectionRef} id="skills" data-animation-region className="py-32 border-t border-border">
             <div className="max-w-7xl mx-auto px-6">
                 <div className="text-center mb-16">
                     <p className="font-mono text-accent text-xs mb-4 tracking-[0.2em] uppercase">
